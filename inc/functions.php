@@ -36,7 +36,7 @@ function pipjq_update_wpcore_jqueryui() {
                          'jquery-ui-slider',
                          'jquery-ui-spinner',
                          'jquery-ui-tabs',
-                         'jquery-ui-tooltip',
+                         'jquery-ui-tooltip');
 
   $widgets_supp = array( 'jquery-ui-checkboxradio',
                          'jquery-ui-controlgroup');
