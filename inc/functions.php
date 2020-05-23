@@ -2,7 +2,92 @@
 
 if ( ! defined( 'PIPJQUI_PLUGIN_WEBPATH' ) ) { exit; }
 
-function pipjq_update_wpcore_jqueryui() {
+
+/**
+ * Generate src attribute for the script nodes.
+ *
+ * This function creates the appropriate `src` attribute needed to register the
+ *  jQuery UI plugin and themes with WordPress based upon the CDN choice. It returns
+ *  an object with that strings as a property, and also a boolean property that
+ *  specifies whether or not the `src` attribute is for a CDN.
+ *
+ * @param string The name of the CDN host.
+ *
+ * @return stdClass
+ */
+function pipjqui_script_src( string $cdnhost="localhost" )
+{
+  $rs = new stdClass();
+  switch ( $cdnhost ) {
+    case 'jQuery.com CDN':
+      $rs->jqueryui = 'http://code.jquery.com/ui/' . PIPJQUIV . '/jquery-ui.min.js';
+      $rs->cdn = true;
+      break;
+    case 'Microsoft CDN':
+      $rs->jqueryui = 'https://ajax.aspnetcdn.com/ajax/jquery.ui/'            . PIPJQUIV . '/jquery-ui.min.js';
+      $rs->cdn = true;
+      break;
+  }
+}
+
+function pipjqui_resolvetheme( string $cdnhost, string $theme ): string
+{
+  $stub = 'humanity';
+  $standard = array( 'Black Tie',
+                     'Blitzer',
+                     'Cupertino',
+                     'Dark-Hive',
+                     'Dot-Luv',
+                     'Eggplant',
+                     'Excite-Bike',
+                     'Flick',
+                     'Hot-Sneaks',
+                     'Humanity',
+                     'Le-Frog',
+                     'Mint-Choc',
+                     'Overcast',
+                     'Pepper-Grinder',
+                     'Redmond',
+                     'Smoothness',
+                     'South-Street',
+                     'Start',
+                     'Sunny',
+                     'Swanky-Purse',
+                     'Trontastic',
+                     'UI-Darkness',
+                     'UI-Lightness',
+                     'Vader');
+  if ( in_array( $theme, $standard ) ) {
+    $stub = strtolower( $theme );
+  }
+  switch ( $cdnhost ) {
+    case 'jQuery.com CDN':
+      $base = 'https://code.jquery.com/ui/';
+      $path = '/themes/' . $stub . 'jquery-ui.css';
+      return $base . PIPJQUIV . $path;
+      break;
+    case 'Microsoft CDN':
+      $base = 'https://ajax.aspnetcdn.com/ajax/jquery.ui/';
+      $path =  '/themes/' . $stub . 'jquery-ui.css';
+      return $base . PIPJQUIV . $path;
+      break;
+  }
+}
+
+function pipjqui_theme_src( string $cdnhost="localhost", array $foo )
+{
+  $rs = array();
+  switch ( $cdnhost ) {
+    case 'Microsoft CDN':
+      if ( in_array('Black Tie', $foo ) ) {
+        $rs['jqueryui-blacktie'] = 'https://ajax.aspnetcdn.com/ajax/jquery.ui/'   . PIPJQUIV . '/themes/black-tie/jquery-ui.css';
+      }
+  }
+}
+
+
+function pipjq_update_wpcore_jqueryui()
+{
 
   $core = array(         'jquery-ui-widget',
                          'jquery-ui-position');
