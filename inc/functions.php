@@ -71,7 +71,13 @@ function pipjqui_resolvetheme( string $cdnhost, string $theme ): string
       $path =  '/themes/' . $stub . 'jquery-ui.css';
       return $base . PIPJQUIV . $path;
       break;
+    case 'CloudFlare CDNJS':
+      $base = 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/';
+      $path = '/themes/' . $stub . '/jquery-ui.min.css';
+      return $base . PIPJQUIV . $path;
+      break;
   }
+  return PIPJQUI_PLUGIN_WEBPATH . themes/ . $stub . '/jquery-ui.min.css';
 }
 
 function pipjqui_theme_src( string $cdnhost="localhost", array $foo )
