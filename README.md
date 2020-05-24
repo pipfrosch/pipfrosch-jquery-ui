@@ -1,6 +1,9 @@
 Pipfrosch jQuery UI
 ===================
 
+None of the code here has been tested. As in none. Will be some time before
+it is.
+
 This will not be seriously worked on much until I need it. And I may not.
 
 If I end up using jQuery UI within piptheme then I will need this, so I am
