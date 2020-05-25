@@ -29,6 +29,7 @@ require_once( PIPJQUI_PLUGIN_DIR . 'versions.php' );
 require_once( PIPJQUI_PLUGIN_DIR . 'inc/functions.php' );
 require_once( PIPJQUI_PLUGIN_DIR . 'inc/cdn.php' );
 
+pipjqui_upgrade_check();
 /* only do setting stuff on admin page, do not update jQuery UI if on admin page */
 
 if ( is_admin() ) {
