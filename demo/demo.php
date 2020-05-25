@@ -357,9 +357,19 @@ function pipjqui_demo_menu(): void
   $html .= '      <li><div>Item 3-5</div></li>' . PHP_EOL;
   $html .= '    </ul>' . PHP_EOL;
   $html .= '  </li>' . PHP_EOL;
-  $html .= '  <li><div>Item 4</div>' . PHP_EOL;
-  $html .= '  <li><div>Item 5</div>' . PHP_EOL;
+  $html .= '  <li><div>Item 4</div></li>' . PHP_EOL;
+  $html .= '  <li><div>Item 5</div></li>' . PHP_EOL;
   $html .= '</ul>' . PHP_EOL;
+  echo $html;
+}
+
+function pipjqui_demo_tooltip(): void
+{
+  $html  = '<!-- Tooltip -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Tooltip</h2>' . PHP_EOL;
+  $html .= '<p id="tooltip">' . PHP_EOL;
+  $html .= '  <a href="#" title="That&apos;s what this widget is">Tooltips</a> can be attached to any element. When you hover the element with your mouse, the title attribute is displayed in a little box next to the element, just like a native tooltip.' . PHP_EOL;
+  $html .= '</p>' . PHP_EOL;
   echo $html;
 }
 
@@ -384,6 +394,7 @@ function pipjqui_demo_shortcode(): void
   pipjqui_demo_select_menu();
   pipjqui_demo_spinner();
   pipjqui_demo_menu();
+  pipjqui_demo_tooltip();
   
   // close opening div
   echo "</div>" . PHP_EOL;
