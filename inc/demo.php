@@ -33,7 +33,6 @@ function pipjqui_demo_autocomplete(): void
 
 function pipjqui_demo_shortcode(): void
 {
-  wp_enqueue_style('pipjqui-democss');
   echo '<div id="pipjqui-demo">' . PHP_EOL;
   echo '<h1>Welcome to jQuery UI via Pipfrosch Press!</h1>' . PHP_EOL;
   echo '<div class="ui-widget">' . PHP_EOL;
@@ -45,6 +44,15 @@ function pipjqui_demo_shortcode(): void
   // close opening div
   echo "</div>" . PHP_EOL;
 }
+
+function pipjqui_shortcode_style() {
+  global $post;
+  if ( isset($post_content) && has_shortcode( $post_content, 'jqueryui-demo' ) ) {
+    wp_enqueue_style('pipjqui-democss');
+  }
+}
+
+
 function pipjqui_register_shortcodes() {
   add_shortcode('jqueryui-demo', 'pipjqui_demo_shortcode');
 }
