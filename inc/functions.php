@@ -75,7 +75,7 @@ function pipjqui_sanitize_cdnhost( string $input ) {
  * This function queries the option setting for the CDN host to use
  *  and sanitizes the result. In the event that the option is not
  *  yet set, it sets the option to the default value as returned by
- *  the pipjq_sanitize_cdnhost() function. In the event that the
+ *  the pipjqui_sanitize_cdnhost() function. In the event that the
  *  sanitized option returned differs from what is stored as in the
  *  WordPress options database for this setting, the WordPress option
  *  is updated with the sanitized version.
@@ -163,7 +163,7 @@ function pipjqui_initialize_options() {
  */
 function pipjqui_mod_expires(): void
 {
-  $htaccess = PIPJQ_PLUGIN_DIR . ".htaccess";
+  $htaccess = PIPJQUI_PLUGIN_DIR . ".htaccess";
   if ( file_exists( $htaccess ) ) {
     // do not overwrite if already exists
     return;
@@ -267,7 +267,7 @@ function pipjqui_register_themes(): void
 {
   $cdnhost = pipjqui_get_cdnhost();
   // jquery-ui-theme-base
-  $src = PIPJQ_PLUGIN_WEBPATH . 'themes/base/jquery-ui.min.css';
+  $src = PIPJQUI_PLUGIN_WEBPATH . 'themes/base/jquery-ui.min.css';
   // when serving locally include non-null version parameter
   wp_register_style( 'jquery-ui-base', $src, array(), PIPJQUIV );
   
@@ -326,7 +326,7 @@ function pipjqui_register_themes(): void
         wp_register_style( $handle, $src, array('jquery-ui-base'), null );
         break;
       default:
-        $src = PIPJQ_PLUGIN_WEBPATH . 'themes/' . $stub . '/jquery-ui.min.css';
+        $src = PIPJQUI_PLUGIN_WEBPATH . 'themes/' . $stub . '/jquery-ui.min.css';
         // when serving locally include non-null version parameter
         //  when serving locally, we do not need base as fall-back dep
         wp_register_style( $handle, $src, array(''), PIPJQUIV );
@@ -371,7 +371,7 @@ function pipjqui_script_src( string $cdnhost="localhost" )
       $rs->cdn = true;
       break;
     default:
-      $rs->jqueryui = PIPJQ_PLUGIN_WEBPATH . 'jquery-ui.min.js';
+      $rs->jqueryui = PIPJQUI_PLUGIN_WEBPATH . 'jquery-ui.min.js';
       $rs->cdn = false;
   }
   return $rs;
@@ -389,7 +389,7 @@ function pipjqui_script_src( string $cdnhost="localhost" )
  *
  * @return string
  */
-function pipjq_fallback_for_cdn_failure(): string
+function pipjqui_fallback_for_cdn_failure(): string
 {
   $html = '<script>' . PHP_EOL . '  // Fallback to load locally if CDN fails' . PHP_EOL;
   $html .= '  if (typeof jQuery.ui == \'undefined\') {' . PHP_EOL;
@@ -425,7 +425,7 @@ function pipjq_fallback_for_cdn_failure(): string
 function pipjqui_add_sri_attributes( string $tag, string $handle, string $source ): string
 {
   if ( $handle === 'jquery-ui-core' ) {
-    $html = pipjq_fallback_for_cdn_failure();
+    $html = pipjqui_fallback_for_cdn_failure();
     return '<script src="' . $source . '" integrity="' . PIPJQUIVSRI . '" crossorigin="anonymous"></script>' . PHP_EOL . $html;
   }
   return $tag;
@@ -451,13 +451,13 @@ function pipjqui_add_sri_attributes( string $tag, string $handle, string $source
 function pipjqui_add_crossorigin_attribute( string $tag, string $handle, string $source ): string
 {
   if ( $handle === 'jquery-ui-core' ) {
-    $html = pipjq_fallback_for_cdn_failure();
+    $html = pipjqui_fallback_for_cdn_failure();
     return '<script src="' . $source . '" crossorigin="anonymous"></script>' . PHP_EOL . $html;
   }
   return $tag;
 }
 
-function pipjq_update_wpcore_jqueryui()
+function pipjqui_update_wpcore_jqueryui()
 {
   $sri     = pipjqui_get_option_as_boolean( 'pipjqui_sri' );
   $cdnhost = pipjqui_get_cdnhost();

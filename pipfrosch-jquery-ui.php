@@ -35,7 +35,7 @@ if ( is_admin() ) {
   $foo = 'bar';
 } else {
   add_action( 'wp_enqueue_scripts', 'pipjqui_register_themes' );
-  add_action( 'wp_enqueue_scripts', 'pipjq_update_wpcore_jqueryui' );
+  add_action( 'wp_enqueue_scripts', 'pipjqui_update_wpcore_jqueryui' );
   //
   // NOTE FOR BELOW - may not be necessary if I can declare a style sheet
   //  as a dependency for a script, I have to test. Should be able to.
