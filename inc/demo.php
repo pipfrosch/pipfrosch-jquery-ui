@@ -49,7 +49,7 @@ function pipjqui_shortcode_style() {
   global $post;
   if ( isset($post->post_content) && has_shortcode( $post->post_content, 'jqueryui-demo' ) ) {
     wp_enqueue_style('pipjqui-democss');
-    wp_enqueue_script('pipqui-demojs');
+    wp_enqueue_script('pipjqui-demojs');
   }
 }
 
