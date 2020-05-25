@@ -48,6 +48,7 @@ if ( is_admin() ) {
   $demo = true;
   if ( $demo ) {
     wp_register_style( 'pipjqui-democss', PIPJQUI_PLUGIN_WEBPATH . 'demo/pipjqui-demo.css', array(), '1' );
+    wp_register_script( 'pipjqui-demojs', PIPJQUI_PLUGIN_WEBPATH . 'demo/pipjqui-demo.css', array('jquery-ui-core'), '1', true );
     add_action( 'wp_enqueue_scripts', 'pipjqui_shortcode_style');
     add_action( 'init', 'pipjqui_register_shortcodes');
   }
