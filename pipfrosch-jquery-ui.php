@@ -1,6 +1,33 @@
 <?php
+/**
+ * Plugin Name:       Pipfrosch jQuery UI
+ * Plugin URI:        https://pipfrosch.com/floss/pipfrosch-jquery-ui/
+ * Description:       Provides a modern jQuery UI library for WordPress frontend
+ * Tags:              jQuery,jQuery UI,jQuery-UI
+ * Version:           0.0.2pre
+ * Requires at least: 4.1.0
+ * Tested up to:      5.4.1
+ * Author:            Pipfrosch Press
+ * Author URI:        https://pipfrosch.com/
+ * License:           MIT
+ * License URI:       https://opensource.org/licenses/MIT
+ * Text Domain:       pipfrosch-jquery-ui
+ * Domain Path:       /languages
+ */
 
-/* header stuff here */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
+$pipjqui_url_array = parse_url( plugin_dir_url( __FILE__ ) );
+
+define( "PIPJQUI_PLUGIN_DIR", plugin_dir_path( __FILE__ ) );
+define( "PIPJQUI_PLUGIN_WEBPATH", $pipjqui_url_array['path'] );
+define( "PIPJQUI_PLUGIN_VERSION", '0.0.2pre' );
+
+/* defines for settings API here */
+
+require_once( PIPJQUI_PLUGIN_DIR . 'versions.php' );
+require_once( PIPJQUI_PLUGIN_DIR . 'inc/functions.php' );
+require_once( PIPJQUI_PLUGIN_DIR , 'inc/cdn.php' );
 
 /* only do setting stuff on admin page, do not update jQuery UI if on admin page */
 

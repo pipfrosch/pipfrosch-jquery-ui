@@ -3,50 +3,6 @@
 if ( ! defined( 'PIPJQUI_PLUGIN_WEBPATH' ) ) { exit; }
 
 /**
- * Takes a theme (or stub) name and returns the corresponding stub.
- *
- * This function will return 'humanity' if the specified theme does
- *  not exist.
- *
- * @param string $theme The jQuery UI Theme to convert to a stub
- *
- * @return string
- */
-function pipjqui_theme_to_stub( string $theme ): string
-{
-  $stub = strtolower( sanitize_text_field( $theme ) );
-  $stub = preg_replace('/\s+/', '-', $stub);
-  $standard = array( 'black-tie',
-                     'blitzer',
-                     'cupertino',
-                     'dark-hive',
-                     'dot-luv',
-                     'eggplant',
-                     'excite-bike',
-                     'flick',
-                     'hot-sneaks',
-                     'humanity',
-                     'le-frog',
-                     'mint-choc',
-                     'overcast',
-                     'pepper-grinder',
-                     'redmond',
-                     'smoothness',
-                     'south-street',
-                     'start',
-                     'sunny',
-                     'swanky-purse',
-                     'trontastic',
-                     'ui-darkness',
-                     'ui-lightness',
-                     'vader');
-  if ( in_array( $stub, $standard ) ) {
-    return $stub;
-  }
-  return 'humanity';
-}
-
-/**
  * Get an option as boolean value.
  *
  * This function queries the option and returns a boolean value representing
@@ -113,7 +69,21 @@ function pipjqui_sanitize_cdnhost( string $input ) {
   return 'jQuery.com CDN';
 }
 
-function pipjqui_get_cdnhost_option() {
+/**
+ * Get CDN host option and return as sanitized string.
+ *
+ * This function queries the option setting for the CDN host to use
+ *  and sanitizes the result. In the event that the option is not
+ *  yet set, it sets the option to the default value as returned by
+ *  the pipjq_sanitize_cdnhost() function. In the event that the
+ *  sanitized option returned differs from what is stored as in the
+ *  WordPress options database for this setting, the WordPress option
+ *  is updated with the sanitized version.
+ *
+ * @return string
+ */
+function pipjqui_get_cdnhost_option(): string
+{
   // see if preferred CDN from Pipfrosch jQuery has been set and default to
   //  that if it has been.
   $test = get_option( 'pipjq_cdnhost' ); // this option not set by this plugin
@@ -135,6 +105,98 @@ function pipjqui_get_cdnhost_option() {
 }
 
 /**
+ * Sanitize checkbox input.
+ *
+ * This plugin likes the faux boolean options set to be a string of "0" for false
+ *  and "1" for true. The form sets a value a "1" when checked. If a string that
+ *  evaluates as the integer 1 when recast to integer is supplies, this function
+ *  will output the string "1". Any other value and it outputs the string "0".
+ *
+ * @param string The string passed to this callback from the WordPress options form
+ *               processing.
+ *
+ * @return string
+ */
+function pipjqui_sanitize_checkbox( string $input ): string
+{
+  $input = sanitize_text_field( $input );
+  if ( is_numeric( $input ) ) {
+    $num = intval( $input );
+    if ( $num === 1 ) {
+      return "1";
+    }
+  }
+  return "0";
+}
+
+/**
+ * Initialize options
+ *
+ * This function makes sure the options are defined in the WordPress options
+ *  database and sets them to the default values if they are not already
+ *  defined. This script is run during plugin activation.
+ *
+ * @return void
+ */
+function pipjqui_initialize_options() {
+  $foo = pipjqui_get_option_as_boolean( 'pipjqui_cdn', false );
+  $foo = pipjqui_get_option_as_boolean( 'pipjqui_sri' );
+  $foo = pipjqui_get_cdnhost_option();
+  $test = get_option( 'pipjqui_plugin_version' );
+  if ( ( is_bool ($test) ) && ( ! $test ) ) {
+      add_option( 'pipjqui_plugin_version', PIPJQUI_PLUGIN_VERSION );
+  } else {
+      update_option( 'pipjqui_plugin_version', PIPJQUI_PLUGIN_VERSION );
+  }
+  $test = get_option( 'pipjqui_jquery_ui_version' );
+  if ( ( is_bool ($test) ) && ( ! $test ) ) {
+    add_option( 'pipjqui_jquery_ui_version', PIPJQUIV );
+  } else {
+    update_option( 'pipjqui_jquery_ui_version', PIPJQUIV );
+  }
+}
+
+/**
+ * Creates a .htaccess file for mod_expires
+ *
+ * @return void
+ */
+function pipjqui_mod_expires(): void
+{
+  $htaccess = PIPJQ_PLUGIN_DIR . ".htaccess";
+  if ( file_exists( $htaccess ) ) {
+    // do not overwrite if already exists
+    return;
+  }
+  if ( is_writeable( dirname( $htaccess ) ) ) {
+    $contents  = '<IfModule mod_expires.c>' . PHP_EOL;
+    $contents .= '  ExpiresActive On' . PHP_EOL;
+    $contents .= '  <FilesMatch "\.min\.(css|js)">' . PHP_EOL;
+    $contents .= '    ExpiresDefault "access plus 1 years"' . PHP_EOL;
+    $contents .= '  </FilesMatch>' . PHP_EOL;
+    $contents .= '</IfModule>' . PHP_EOL . PHP_EOL;
+    file_put_contents( $htaccess, $contents );
+  }
+}
+
+/**
+ * Callback to see if installed version of plugin is upgrade
+ *
+ * This also serves purpose of activation hook but in a way that should
+ *  be compatible with mu plugins.
+ *
+ * @return void
+ */
+function pipjqui_upgrade_check(): void
+{
+  $test = get_option( 'pipjqui_plugin_version' );
+  if ( ! is_string( $test ) || ( $test !== PIPJQUI_PLUGIN_VERSION ) ) {
+    pipjqui_initialize_options();
+    pipjqui_mod_expires();
+  }
+}
+
+/**
  * returns the selected CDN or localhost
  *
  * @return string
@@ -145,6 +207,50 @@ function pipjqui_get_cdnhost(): string
     return pipjqui_get_cdnhost_option();
   }
   return 'localhost';
+}
+
+/**
+ * Takes a theme (or stub) name and returns the corresponding stub.
+ *
+ * This function will return 'humanity' if the specified theme does
+ *  not exist.
+ *
+ * @param string $theme The jQuery UI Theme to convert to a stub
+ *
+ * @return string
+ */
+function pipjqui_theme_to_stub( string $theme ): string
+{
+  $stub = strtolower( sanitize_text_field( $theme ) );
+  $stub = preg_replace('/\s+/', '-', $stub);
+  $standard = array( 'black-tie',
+                     'blitzer',
+                     'cupertino',
+                     'dark-hive',
+                     'dot-luv',
+                     'eggplant',
+                     'excite-bike',
+                     'flick',
+                     'hot-sneaks',
+                     'humanity',
+                     'le-frog',
+                     'mint-choc',
+                     'overcast',
+                     'pepper-grinder',
+                     'redmond',
+                     'smoothness',
+                     'south-street',
+                     'start',
+                     'sunny',
+                     'swanky-purse',
+                     'trontastic',
+                     'ui-darkness',
+                     'ui-lightness',
+                     'vader');
+  if ( in_array( $stub, $standard ) ) {
+    return $stub;
+  }
+  return 'humanity';
 }
 
 /**
@@ -229,27 +335,7 @@ function pipjqui_register_themes(): void
   // use base by default
   $handle = 'jquery-ui-base';
   wp_register_style( 'jquery-ui-theme-active', false, array( $handle ), null );
-  
-  /* register aliases for what standard themes provide - TODO I think this borked */
-  $base = array( 'accordion',
-                 'autocomplete',
-                 'button',
-                 'datepicker',
-                 'dialog',
-                 'menu',
-                 'progressbar',
-                 'resizable',
-                 'selectable',
-                 'slider',
-                 'spinner',
-                 'tabs',
-                 'tooltip',
-                 'theme' );
-  foreach( $base as $feature ) {
-    $handle = 'jquery-ui-' . $feature;
-    wp_deregister_style( $handle );
-    wp_register_style( $handle, false, array('jquery-ui-theme-active'), null);
-  }
+  add_filter( 'style_loader_tag', 'pipjqui_theme_cdn_attributes', 10, 3 );
 }
 
 /**
