@@ -526,7 +526,11 @@ function pipjqui_update_wpcore_jqueryui()
   foreach( $components as $component ) {
     wp_deregister_script( $component );
   }
-  wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core' ), null );
+  if ( $srcuri->cdn ) {
+    wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core' ), null );
+  } else {
+    wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core' ), PIPJQUIV );
+  }
   // set up the aliases
   wp_register_script( 'jquery-ui-core', false, array( 'pipfrosch-jquery-ui-core' ), null );
   foreach( $alias_components as $component ) {
