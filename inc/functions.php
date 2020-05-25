@@ -320,7 +320,7 @@ function pipjqui_register_themes(): void
         wp_register_style( $handle, $src, array('jquery-ui-base'), null );
         break;
       case 'Google CDN':
-        $base = 'https://ajax.googleapis.com/ajax/libs/jqueryui/'
+        $base = 'https://ajax.googleapis.com/ajax/libs/jqueryui/';
         $path = '/themes/' . $stub . '/jquery-ui.min.css';
         $src = $base . PIPJQUIV . $path;
         wp_register_style( $handle, $src, array('jquery-ui-base'), null );
