@@ -316,7 +316,12 @@ function pipjqui_demo_progressbar(): void
   $html  = '<!-- Progressbar -->' . PHP_EOL;
   $html .= '<h2 class="demoHeaders">Progressbar</h2>' . PHP_EOL;
   $html .= '<div id="progressbar"></div>' . PHP_EOL . PHP_EOL . PHP_EOL;
-  $html .= '<!-- Progressbar -->' . PHP_EOL;
+  echo $html;
+}
+
+function pipjqui_demo_select_menu(): void
+{
+  $html  = '<!-- Select Menu -->' . PHP_EOL;
   $html .= '<h2 class="demoHeaders">Selectmenu</h2>' . PHP_EOL;
   $html .= '<select id="selectmenu">' . PHP_EOL;
   $html .= '  <option>Slower</option>' . PHP_EOL;
@@ -325,6 +330,36 @@ function pipjqui_demo_progressbar(): void
   $html .= '  <option>Fast</option>' . PHP_EOL;
   $html .= '  <option>Faster</option>' . PHP_EOL;
   $html .= '</select>' . PHP_EOL;
+  echo $html;
+}
+
+function pipjqui_demo_spinner(): void
+{
+  $html  = '<!-- Spinner -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Spinner</h2>' . PHP_EOL;
+  $html .= '<input id="spinner">' . PHP_EOL;
+  echo $html;
+}
+
+function pipjqui_demo_menu(): void
+{
+  $html  = '<!-- Menu -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Menu</h2>' . PHP_EOL;
+  $html .= '<ul style="width:100px;" id="menu">' . PHP_EOL;
+  $html .= '  <li><div>Item 1</div></li>' . PHP_EOL;
+  $html .= '  <li><div>Item 2</div></li>' . PHP_EOL;
+  $html .= '  <li><div>Item 3</div>' . PHP_EOL;
+  $html .= '    <ul>' . PHP_EOL;
+  $html .= '      <li><div>Item 3-1</div></li>' . PHP_EOL;
+  $html .= '      <li><div>Item 3-2</div></li>' . PHP_EOL;
+  $html .= '      <li><div>Item 3-3</div></li>' . PHP_EOL;
+  $html .= '      <li><div>Item 3-4</div></li>' . PHP_EOL;
+  $html .= '      <li><div>Item 3-5</div></li>' . PHP_EOL;
+  $html .= '    </ul>' . PHP_EOL;
+  $html .= '  </li>' . PHP_EOL;
+  $html .= '  <li><div>Item 4</div>' . PHP_EOL;
+  $html .= '  <li><div>Item 5</div>' . PHP_EOL;
+  $html .= '</ul>' . PHP_EOL;
   echo $html;
 }
 
@@ -346,6 +381,10 @@ function pipjqui_demo_shortcode(): void
   pipjqui_demo_slider();
   pipjqui_demo_datepicker();
   pipjqui_demo_progressbar();
+  pipjqui_demo_select_menu();
+  pipjqui_demo_spinner();
+  pipjqui_demo_menu();
+  
   // close opening div
   echo "</div>" . PHP_EOL;
 }
