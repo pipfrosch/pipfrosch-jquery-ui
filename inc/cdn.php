@@ -3,7 +3,7 @@
 if ( ! defined( 'PIPJQUI_PLUGIN_WEBPATH' ) ) { exit; }
 
 
-function pipjqui_theme_cdn_attributes( string $html, string $handle, string $href, string $media ) {
+function pipjqui_theme_cdn_attributes( string $html, string $handle, string $href, string $media = 'all' ) {
   // array of handles this callback is used with
   $myhandles = array(
     'jquery-ui-theme-black-tie',
