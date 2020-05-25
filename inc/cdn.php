@@ -36,7 +36,7 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
 
   // hashes to use with unminified themes
   $hashes_bloated = array(
-    'jquery-ui-theme-black-tie'      => 'fixme',
+    'jquery-ui-theme-black-tie'      => 'sha256-GoHAaz6rZ9vWIl8NqcaR1Sw+khKk1WzAeMdegW32UWA=',
     'jquery-ui-theme-blitzer'        => 'fixme',
     'jquery-ui-theme-cupertino'      => 'fixme',
     'jquery-ui-theme-dark-hive'      => 'fixme',
@@ -62,8 +62,7 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
     'jquery-ui-theme-vader'          => 'fixme' );
   // hashes to use with minified themes
   $hashes_minified = array(
-    'jquery-ui-core'                 => 'fixme',
-    'jquery-ui-theme-black-tie'      => 'fixme',
+    'jquery-ui-theme-black-tie'      => 'sha256-MyuxfsvHhD1wixmCD+gnc3zfEQWfKEExEbhgBDgsabM=',
     'jquery-ui-theme-blitzer'        => 'fixme',
     'jquery-ui-theme-cupertino'      => 'fixme',
     'jquery-ui-theme-dark-hive'      => 'fixme',
