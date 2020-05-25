@@ -646,7 +646,7 @@ function pipjqui_load_custom_theme( string $handle, string $src, string $depende
   $version = pipjqui_get_active_theme_version();
   // try to detect theme version
   
-  if ( strlen( trim( $dependency ) ) = 0 ) {
+  if ( strlen( trim( $dependency ) ) === 0 ) {
     wp_register_style( $handle, $src, array(), $version );
   } elseif ( $dependency === 'base' ) {
     wp_register_style( $handle, $src, array( 'jquery-ui-base' ), $version );
