@@ -93,7 +93,21 @@ function pipjqui_demo_dialog(): void
   $html .= '  <button id="dialog-link" class="ui-button ui-corner-all ui-widget">' . PHP_EOL;
   $html .= '    <span class="ui-icon ui-icon-newwin"></span>Open Dialog' . PHP_EOL;
   $html .= '  </button>' . PHP_EOL;
-  $html .= '</p>' . PHP_EOL;
+  $html .= '</p>' . PHP_EOL . PHP_EOL . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Overlay and Shadow Classes</h2>' . PHP_EOL;
+  $html .= '<div style="position: relative; width: 96%; height: 200px; padding:1% 2%; overflow:hidden;" class="fakewindowcontain">' . PHP_EOL;
+  $html .= '  <p>Lorem ipsum dolor sit amet,  Nulla nec tortor. Donec id elit quis purus consectetur consequat. </p><p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. </p><p>Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. </p><p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. </p><p>Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. </p><p>Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. </p>' . PHP_EOL . PHP_EOL . PHP_EOL;
+  $html .= '  <!-- ui-dialog -->' . PHP_EOL;
+  $html .= '  <div class="ui-widget-overlay ui-front"></div>' . PHP_EOL;
+  $html .= '  <div style="position: absolute; width: 320px; left: 50px; top: 30px; padding: 1.2em" class="ui-widget ui-front ui-widget-content ui-corner-all ui-widget-shadow">' . PHP_EOL;
+  $html .= '    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' . PHP_EOL;
+  $html .= '  </div>' . PHP_EOL . PHP_EOL . PHP_EOL;
+  $html .= '</div>' . PHP_EOL;
+  $html .= '<!-- ui-dialog -->' . PHP_EOL;
+  $html .= '<div id="dialog" title="Dialog Title">' . PHP_EOL;
+  $html .= '  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>' . PHP_EOL;
+  $html .= '</div>' . PHP_EOL;
+  
   echo $html;
 }
 
