@@ -526,7 +526,7 @@ function pipjqui_update_wpcore_jqueryui()
   foreach( $components as $component ) {
     wp_deregister_script( $component );
   }
-  wp_register_script( 'jquery-ui-core', $srcuri->jqueryui, array( 'jquery' ), null );
+  wp_register_script( 'jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core' ), null );
   // set up the aliases
   foreach( $alias_components as $component ) {
     wp_register_script( $component, false, array( 'jquery-ui-core' ), null );
