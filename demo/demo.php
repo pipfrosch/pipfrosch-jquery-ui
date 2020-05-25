@@ -68,7 +68,34 @@ function pipjqui_demo_controlgroup(): void
   echo $html;
 }
 
+function pipjqui_demo_tabs(): void
+{
+  $html  = '<!-- Tabs -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Tabs</h2>' . PHP_EOL;
+  $html .= '<div id="tabs">' . PHP_EOL;
+  $html .= '  <ul>' . PHP_EOL;
+  $html .= '    <li><a href="#tabs-1">First</a></li>' . PHP_EOL;
+  $html .= '    <li><a href="#tabs-2">Second</a></li>' . PHP_EOL;
+  $html .= '    <li><a href="#tabs-3">Third</a></li>' . PHP_EOL;
+  $html .= '  </ul>' . PHP_EOL;
+  $html .= '  <div id="tabs-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>' . PHP_EOL;
+  $html .= '  <div id="tabs-2">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>' . PHP_EOL;
+  $html .= '  <div id="tabs-3">Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</div>' . PHP_EOL;
+  $html .= '</div>';
+  echo $html;
+}
 
+function pipjqui_demo_dialog(): void
+{
+  $html  = '<!-- Dialog -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Dialog</h2>' . PHP_EOL;
+  $html .= '<p>' . PHP_EOL;
+  $html .= '  <button id="dialog-link" class="ui-button ui-corner-all ui-widget">' . PHP_EOL;
+  $html .= '    <span class="ui-icon ui-icon-newwin"></span>Open Dialog' . PHP_EOL;
+  $html .= '  </button>' . PHP_EOL;
+  $html .= '</p>' . PHP_EOL;
+  echo $html;
+}
 
 
 
@@ -79,13 +106,15 @@ function pipjqui_demo_shortcode(): void
   echo '<div id="pipjqui-demo">' . PHP_EOL;
   echo '<h1>Welcome to jQuery UI via Pipfrosch Press!</h1>' . PHP_EOL;
   echo '<div class="ui-widget">' . PHP_EOL;
-  echo '  <p>This page demonstrates the capabilities of jQuery UI. This demo page is adapted from the jQuery UI demo in the official download.</p>' . PHP_EOL;
+  echo '  <p>This page demonstrates some of the capabilities of jQuery UI, as well as the ease of integration into WordPress using the Pipfrosch jQuery UI plugin.<br />This demo page is adapted from the jQuery UI HTML demo in the official download.</p>' . PHP_EOL;
   echo '</div>' . PHP_EOL;
   // include the demos
   pipjqui_demo_accordion();
   pipjqui_demo_autocomplete();
   pipjqui_demo_checkboxradio();
   pipjqui_demo_controlgroup();
+  pipjqui_demo_tabs();
+  pipjqui_demo_dialog();
   // close opening div
   echo "</div>" . PHP_EOL;
 }
