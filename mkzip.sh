@@ -24,7 +24,7 @@ cd themes
 mv mksri.sh mksri.txt
 cd ..
 
-VERSION=`grep "Version:" pipfrosch-jquery.php |head -1 |cut -d':' -f2 |tr -d '[:space:]'`
+VERSION=`grep "Version:" pipfrosch-jquery-ui.php |head -1 |cut -d':' -f2 |tr -d '[:space:]'`
 
 cd ..
 
