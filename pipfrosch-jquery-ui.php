@@ -28,6 +28,7 @@ define( "PIPJQUI_PLUGIN_VERSION", '0.0.2pre' );
 require_once( PIPJQUI_PLUGIN_DIR . 'versions.php' );
 require_once( PIPJQUI_PLUGIN_DIR . 'inc/functions.php' );
 require_once( PIPJQUI_PLUGIN_DIR . 'inc/cdn.php' );
+require_once( PIPJQUI_PLUGIN_DIR . 'inc/demo.php' );
 
 pipjqui_upgrade_check();
 /* only do setting stuff on admin page, do not update jQuery UI if on admin page */
@@ -43,4 +44,9 @@ if ( is_admin() ) {
   // If I can then all I have to do is specify jquery-ui-theme-active as a
   //  dependency of jquery-ui-core and I do not need pipjqui_load_default_theme()
   add_action( 'wp_enqueue_scripts', 'pipjqui_load_default_theme', PHP_INT_MAX );
+  // for the demo page
+  $demo = true;
+  if ( $demo ) {
+    add_action( 'init', 'pipjqui_register_shortcodes');
+  }
 }

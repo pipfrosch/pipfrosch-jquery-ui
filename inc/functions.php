@@ -424,7 +424,7 @@ function pipjqui_fallback_for_cdn_failure(): string
  */
 function pipjqui_add_sri_attributes( string $tag, string $handle, string $source ): string
 {
-  if ( $handle === 'jquery-ui-core' ) {
+  if ( $handle === 'pipfrosch-jquery-ui-core' ) {
     $html = pipjqui_fallback_for_cdn_failure();
     return '<script src="' . $source . '" integrity="' . PIPJQUIVSRI . '" crossorigin="anonymous"></script>' . PHP_EOL . $html;
   }
@@ -450,7 +450,7 @@ function pipjqui_add_sri_attributes( string $tag, string $handle, string $source
  */
 function pipjqui_add_crossorigin_attribute( string $tag, string $handle, string $source ): string
 {
-  if ( $handle === 'jquery-ui-core' ) {
+  if ( $handle === 'pipfrosch-jquery-ui-core' ) {
     $html = pipjqui_fallback_for_cdn_failure();
     return '<script src="' . $source . '" crossorigin="anonymous"></script>' . PHP_EOL . $html;
   }
@@ -526,10 +526,11 @@ function pipjqui_update_wpcore_jqueryui()
   foreach( $components as $component ) {
     wp_deregister_script( $component );
   }
-  wp_register_script( 'jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core' ), null );
+  wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core' ), null );
   // set up the aliases
+  wp_register_script( 'jquery-ui-core', false, array( 'pipfrosch-jquery-ui-core' ), null );
   foreach( $alias_components as $component ) {
-    wp_register_script( $component, false, array( 'jquery-ui-core' ), null );
+    wp_register_script( $component, false, array( 'pipfrosch-jquery-ui-core' ), null );
   }
   if ( $srcuri->cdn ) {
     if ( $sri ) {
@@ -553,7 +554,7 @@ function pipjqui_update_wpcore_jqueryui()
  */
 function pipjqui_load_default_theme(): void
 {
-  if ( wp_script_is( 'jquery-ui-core' ) ) {
+  if ( wp_script_is( 'pipfrosch-jquery-ui-core' ) ) {
     wp_enqueue_style( 'jquery-ui-theme-active' );
   }
 }
