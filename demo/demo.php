@@ -295,7 +295,38 @@ function pipjqui_demo_framework_icons(): void
   echo $html;
 }
 
+function pipjqui_demo_slider(): void
+{
+  $html  = '<!-- Slider -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Slider</h2>' . PHP_EOL;
+  $html .= '<div id="slider"></div>' . PHP_EOL;
+  echo $html;
+}
 
+function pipjqui_demo_datepicker(): void
+{
+  $html  = '<!-- Datepicker -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Datepicker</h2>' . PHP_EOL;
+  $html .= '<div id="datepicker"></div>' . PHP_EOL;
+  echo $html;
+}
+
+function pipjqui_demo_progressbar(): void
+{
+  $html  = '<!-- Progressbar -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Progressbar</h2>' . PHP_EOL;
+  $html .= '<div id="progressbar"></div>' . PHP_EOL . PHP_EOL . PHP_EOL;
+  $html .= '<!-- Progressbar -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Selectmenu</h2>' . PHP_EOL;
+  $html .= '<select id="selectmenu">' . PHP_EOL;
+  $html .= '  <option>Slower</option>' . PHP_EOL;
+  $html .= '  <option>Slow</option>' . PHP_EOL;
+  $html .= '  <option selected="selected">Medium</option>' . PHP_EOL;
+  $html .= '  <option>Fast</option>' . PHP_EOL;
+  $html .= '  <option>Faster</option>' . PHP_EOL;
+  $html .= '</select>' . PHP_EOL;
+  echo $html;
+}
 
 function pipjqui_demo_shortcode(): void
 {
@@ -312,6 +343,9 @@ function pipjqui_demo_shortcode(): void
   pipjqui_demo_tabs();
   pipjqui_demo_dialog();
   pipjqui_demo_framework_icons();
+  pipjqui_demo_slider();
+  pipjqui_demo_datepicker();
+  pipjqui_demo_progressbar();
   // close opening div
   echo "</div>" . PHP_EOL;
 }
