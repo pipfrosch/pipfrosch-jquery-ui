@@ -25,9 +25,19 @@ function pipjqui_demo_autocomplete(): void
   echo $html;
 }
 
+function pipjqui_demo_button(): void
+{
+  $html  = '<!-- Button -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Button</h2>' . PHP_EOL;
+  $html .= '<button id="button">A button element</button>' . PHP_EOL;
+  $html .= '<button id="button-icon">An icon-only button</button>' . PHP_EOL;
+  echo $html;
+}
+
 function pipjqui_demo_checkboxradio(): void
 {
   $html  = '<!-- Checkboxradio -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Checkboxradio</h2>' . PHP_EOL;
   $html .= '<form style="margin-top: 1em;">' . PHP_EOL;
   $html .= '  <div id="radioset">' . PHP_EOL;
   $html .= '    <input type="radio" id="radio1" name="radio"><label for="radio1">Choice 1</label>' . PHP_EOL;
@@ -403,6 +413,7 @@ function pipjqui_demo_shortcode(): void
   // include the demos
   pipjqui_demo_accordion();
   pipjqui_demo_autocomplete();
+  pipjqui_demo_button();
   pipjqui_demo_checkboxradio();
   pipjqui_demo_controlgroup();
   pipjqui_demo_tabs();
