@@ -373,6 +373,26 @@ function pipjqui_demo_tooltip(): void
   echo $html;
 }
 
+function pipjqui_demo_highlight_error(): void
+{
+  $html  = '<!-- Highlight / Error -->' . PHP_EOL;
+  $html .= '<h2 class="demoHeaders">Highlight / Error</h2>' . PHP_EOL;
+  $html .= '<div class="ui-widget">' . PHP_EOL;
+  $html .= '  <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">' . PHP_EOL;
+  $html .= '    <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' . PHP_EOL;
+  $html .= '    <strong>Hey!</strong> Sample ui-state-highlight style.</p>' . PHP_EOL;
+  $html .= '  </div>' . PHP_EOL;
+  $html .= '</div>' . PHP_EOL;
+  $html .= '<br />' . PHP_EOL;
+  $html .= '<div class="ui-widget">' . PHP_EOL;
+  $html .= '  <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">' . PHP_EOL;
+  $html .= '    <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' . PHP_EOL;
+  $html .= '    <strong>Alert:</strong> Sample ui-state-error style.</p>' . PHP_EOL;
+  $html .= '  </div>' . PHP_EOL;
+  $html .= '</div>' . PHP_EOL . PHP_EOL . PHP_EOL;
+  echo $html;
+}
+
 function pipjqui_demo_shortcode(): void
 {
   echo '<div id="pipjqui-demo">' . PHP_EOL;
@@ -395,7 +415,7 @@ function pipjqui_demo_shortcode(): void
   pipjqui_demo_spinner();
   pipjqui_demo_menu();
   pipjqui_demo_tooltip();
-  
+  pipjqui_demo_highlight_error();
   // close opening div
   echo "</div>" . PHP_EOL;
 }
