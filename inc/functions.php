@@ -613,7 +613,7 @@ function pipjqui_sanitize_checkbox( $input ): string
  */
 function pipjqui_settings_form_text_helpers(): void
 {
-  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
+  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE !== "1" ) {
     $string  = '<p>' . __( 'It is recommended that you enable the', 'pipfrosch-jqueryui' );
     $string .= ' <em>' . __( 'Use Content Distribution Network', 'pipfrosch-jqueryui' ) . '</em> ';
     $string .= __( 'option', 'pipfrosch-jqueryui' ) . '.</p>' . PHP_EOL;
@@ -754,7 +754,7 @@ function pipjqui_options_page_form(): void
  */
 function pipjqui_register_settings(): void
 {
-  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
+  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE !== "1" ) ) {
     register_setting( PIPJQUI_OPTIONS_GROUP,
                       'pipjqui_cdn',
                       array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
@@ -768,7 +768,7 @@ function pipjqui_register_settings(): void
   register_setting( PIPJQUI_OPTIONS_GROUP,
                     'pipjqui_demo',
                     array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
-  if ( defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
+  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE === "1" ) {
     add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
                           'jQuery UI Options',
                           'pipjqui_settings_form_text_helpers',
@@ -822,7 +822,7 @@ function pipjqui_register_settings(): void
  */
 function pipjqui_register_options_page(): void
 {
-  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
+  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE !== "1" ) {
     add_options_page( 'jQuery UI ' . PIPJQUIV . ' ' . __( 'Options', 'pipfrosch-jqueryui' ),
                       'jQuery ' . __( 'Options', 'pipfrosch-jqueryui' ),
                       'manage_options',
