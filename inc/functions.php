@@ -753,7 +753,7 @@ function pipjqui_options_page_form(): void
  */
 function pipjqui_register_settings(): void
 {
-  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
+  if ( ! defined( 'PIPJQ_OPTIONS_GROUP' ) ) {
     register_setting( PIPJQUI_OPTIONS_GROUP,
                       'pipjqui_cdn',
                       array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
@@ -763,10 +763,14 @@ function pipjqui_register_settings(): void
     register_setting( PIPJQUI_OPTIONS_GROUP,
                       'pipjqui_cdnhost',
                       array( 'sanitize_callback' => 'pipjqui_sanitize_cdnhost' ) );
-  }
-  register_setting( PIPJQUI_OPTIONS_GROUP,
+    register_setting( PIPJQUI_OPTIONS_GROUP,
+                      'pipjqui_demo',
+                      array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
+  } else {
+  register_setting( PIPJQ_OPTIONS_GROUP,
                     'pipjqui_demo',
-                    array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
+                      array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
+  }
   if ( defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
     add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
                           'jQuery UI Options',
