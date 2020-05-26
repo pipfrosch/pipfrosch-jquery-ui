@@ -312,8 +312,8 @@ function pipjqui_register_themes(): void
       case 'Microsoft CDN':
         $base = 'https://ajax.aspnetcdn.com/ajax/jquery.ui/';
         $path =  '/themes/' . $stub . '/jquery-ui.css';
-        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );
         $src = $base . PIPJQUIV . $path;
+        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );        
         break;
       case 'CloudFlare CDNJS':
         $base = 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/';

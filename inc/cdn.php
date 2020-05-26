@@ -111,5 +111,5 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
   } else {
     $cdnstring = '" crossorigin="anonymous"';
   }
-  return '<link rel="stylesheet" id="' . $handle . '" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" />' . PHP_EOL;  
+  return '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" />' . PHP_EOL;  
 }
