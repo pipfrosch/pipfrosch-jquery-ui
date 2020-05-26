@@ -718,7 +718,7 @@ function pipjqui_cdnhost_select_tag(): void
  */
 function pipjqui_options_page_form(): void
 {
-  $cdn = pipjq_get_option_as_boolean( 'pipjqui_cdn', false );
+  $cdn = pipjqui_get_option_as_boolean( 'pipjqui_cdn', false );
   $parenthesis = '(' . __( 'disabled', 'pipfrosch-jqueryui' ) . ')';
   if ( $cdn ) {
     $parenthesis = '(' . __( 'enabled', 'pipfrosch-jqueryui' ) . ')';
