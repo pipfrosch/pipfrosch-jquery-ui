@@ -17,6 +17,16 @@ if ( ! defined( 'PIPJQUI_PLUGIN_WEBPATH' ) ) { exit; }
  * @return bool
  */
 function pipjqui_get_option_as_boolean( string $option, bool $default = true ) {
+  if ( defined( 'PIPJQ_PLUGIN_VERSION' ) && function_exists( 'pipjq_get_option_as_boolean' ) ) {
+    // Defer to pipfrosch jQuery for some settings
+    switch ($option) {
+      case 'cdn':
+      case 'sri':
+        return pipjq_get_option_as_boolean( $option, $default );
+        break;
+      }
+    }
+  }
   $test = get_option( $option );
   if ( is_bool( $test ) ) {
     if ( $test ) {
@@ -84,14 +94,12 @@ function pipjqui_sanitize_cdnhost( string $input ) {
  */
 function pipjqui_get_cdnhost_option(): string
 {
-  // see if preferred CDN from Pipfrosch jQuery has been set and default to
-  //  that if it has been.
-  $test = get_option( 'pipjq_cdnhost' ); // this option not set by this plugin
-  if ( is_string( $test ) ) {
-    $default = pipjqui_sanitize_cdnhost( $test );
-  } else {
-    $default = pipjqui_sanitize_cdnhost( 'use default' );
+  if ( defined( 'PIPJQ_PLUGIN_VERSION' ) && function_exists( 'pipjq_get_cdnhost_option' ) ) {
+    // Defer to pipfrosch jQuery for this setting
+    $host = pipjq_get_cdnhost_option();
+    return pipjqui_sanitize_cdnhost( $host );
   }
+  $default = pipjqui_sanitize_cdnhost( 'use default' );
   $test = get_option( 'pipjqui_cdnhost' );
   if ( ! is_string( $test ) ) {
     add_option( 'pipjqui_cdnhost', $default );
