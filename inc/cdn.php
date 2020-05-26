@@ -96,7 +96,7 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
     // CDNs that minify CSS
     $effecient = array(
       'jQuery.com CDN',
-      'Microsoft CDN',
+//      'Microsoft CDN',
       'jsDelivr CDN',
       'CloudFlare CDNJS',
       'Google CDN'
@@ -113,5 +113,5 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
   } else {
     $cdnstring = '" crossorigin="anonymous"';
   }
-  return '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" />' . PHP_EOL;  
+  return '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" onerror="window.alert(\'foo\');" />' . PHP_EOL;  
 }
