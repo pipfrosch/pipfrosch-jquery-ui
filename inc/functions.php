@@ -754,7 +754,7 @@ function pipjqui_options_page_form(): void
  */
 function pipjqui_register_settings(): void
 {
-  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE !== "1" ) ) {
+  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE !== "1" ) {
     register_setting( PIPJQUI_OPTIONS_GROUP,
                       'pipjqui_cdn',
                       array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
