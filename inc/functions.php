@@ -299,7 +299,6 @@ function pipjqui_register_themes(): void
   // when serving locally include non-null version parameter
   wp_register_style( 'jquery-ui-base', $src, array(), PIPJQUIV );
   
-  $stub = 'humanity';
   $themes = pipjqui_default_themes( true );
   foreach ( $themes as $stub ) {
     $handle = 'jquery-ui-theme-' . $stub;
@@ -728,7 +727,7 @@ function pipjqui_cdnhost_select_tag(): void
  */
 function pipjqui_uithemes_select_tag(): void
 {
-  $themestub = 'humanity';
+  $themestub = pipjqui_get_default_theme_option();
   $themes = pipjqui_default_themes();
   $html = '<select name="pipjqui_default_theme" id="pipjqui_default_theme">' . PHP_EOL;
   foreach ( $themes as $theme ) {
