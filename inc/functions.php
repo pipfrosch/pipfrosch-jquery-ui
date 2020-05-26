@@ -622,7 +622,7 @@ function pipjqui_settings_form_text_helpers(): void
     $string .= __( 'option (default)', 'pipfrosch-jqueryui' ) . '.</p>' . PHP_EOL;
     echo $string;
   }
-  $string .= '<p>' . __( 'Enabling the');
+  $string  = '<p>' . __( 'Enabling the');
   $string .= ' <em>jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' ) . '</em> ';
   $string .= __('allows you to use the shortcode' , 'pipfrosch-jqueryui' );
   $string .= ' <code>[jqueryui-demo]</code> ';
@@ -775,6 +775,7 @@ function pipjqui_register_settings(): void
                           PIPJQ_SETTINGS_PAGE_SLUG_NAME );
     add_settings_field( 'pipjqui_demo',
                         'jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' ),
+                        'pipjqui_demo_input_tag',
                         PIPJQ_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
@@ -804,7 +805,8 @@ function pipjqui_register_settings(): void
                         array( 'label_for' => 'pipjqui_cdnhost' ) );
     add_settings_field( 'pipjqui_demo',
                         'jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' ),
-                        PIPJQ_SETTINGS_PAGE_SLUG_NAME,
+                        'pipjqui_demo_input_tag',
+                        PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
   }
