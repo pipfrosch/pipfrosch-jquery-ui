@@ -37,7 +37,8 @@ pipjqui_upgrade_check();
 /* only do setting stuff on admin page, do not update jQuery UI if on admin page */
 
 if ( is_admin() ) {
-  $foo = 'bar';
+  add_action( 'admin_init', 'pipjqui_register_settings' );
+  add_action( 'admin_menu', 'pipjqui_register_options_page' );
 } else {
   add_action( 'wp_enqueue_scripts', 'pipjqui_register_themes' );
   add_action( 'wp_enqueue_scripts', 'pipjqui_update_wpcore_jqueryui' );
