@@ -564,28 +564,6 @@ function pipjqui_load_default_theme(): void
   }
 }
 
-/**
- * Attempts to get the current theme version
- *
- * Returns string if successful, false otherwise which when used
- *  in wp_register_style will result in WP version being used.
- */
-function pipjqui_get_active_theme_version()
-{
-  if ( function_exists( 'wp_get_theme' ) ) {
-    $themeObject = wp_get_theme();
-    if ( $themeObject->exists() ) {
-      if ( $themeObject->__isset( 'version' ) ) {
-        $version = $themeObject->__get( 'version' );
-        if ( version_compare( $version, '0.0.1', '>=' ) ) {
-          return $version;
-        }
-      }
-    }
-  }
-  return false;
-}
-
 /* For Settings API */
 
 /**
@@ -888,12 +866,36 @@ function pipjqui_register_options_page(): void
     }
 }
 
+/* Support function for below two scripts */
+
+/**
+ * Attempts to get the current WordPress theme version
+ *
+ * Returns string if successful, false otherwise which when used
+ *  in wp_register_style will result in WP version being used.
+ */
+function pipjqui_get_active_theme_version()
+{
+  if ( function_exists( 'wp_get_theme' ) ) {
+    $themeObject = wp_get_theme();
+    if ( $themeObject->exists() ) {
+      if ( $themeObject->__isset( 'version' ) ) {
+        $version = $themeObject->__get( 'version' );
+        if ( version_compare( $version, '0.0.1', '>=' ) ) {
+          return $version;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 /* Functions for theme developers to use */
 
 /**
  * Define a standard jQuiry UI theme that gets loaded
  *
- * This function should be called late:
+ * This function should be called with something like this:
  *
  * function theme_stub_load_jqui_theme() {
  *   if (function_exists('pipjqui_load_alternate_theme')) {
@@ -903,11 +905,7 @@ function pipjqui_register_options_page(): void
  *     }
  *   }
  * }
- * add_action('wp_enqueue_scripts', 'theme_stub_load_jqui_theme', PHP_INT_MAX);
- *
- * Calling it late makes sure pipfrosch-jquery-ui is loaded so that
- *  pipjqui_load_alternate_theme will have been defined and the
- *  jquery-ui-theme-active handle will have been registered.
+ * add_action('wp_enqueue_scripts', 'theme_stub_load_jqui_theme');
  *
  * @param string $theme The standard jQuery UI theme to use.
  *
@@ -915,15 +913,20 @@ function pipjqui_register_options_page(): void
  */
 function pipjqui_load_alternate_theme( string $theme ): void
 {
-  $theme_handle = 'jquery-ui-theme-' . pipjqui_theme_to_stub( $theme );
-  wp_deregister_style( 'jquery-ui-theme-active' );
-  wp_register_style( 'jquery-ui-theme-active', false, array( $theme_handle ), null );
+  $stub = strtolower( sanitize_text_field( $theme ) );
+  $stub = preg_replace('/\s+/', '-', $stub);
+  $valid = pipjqui_default_themes( true );
+  if ( in_array( $stub, $valid ) ) {
+    $theme_handle = 'jquery-ui-theme-' . $stub;
+    wp_deregister_style( 'jquery-ui-theme-active' );
+    wp_register_style( 'jquery-ui-theme-active', false, array( $theme_handle ), null );
+  }
 }
 
 /**
  * Define a custom jQuiry UI theme that gets loaded
  *
- * This function should be called late:
+ * This function should be called with something like this:
  *
  * function theme_stub_load_jqui_theme() {
  *   if (function_exists('pipjqui_load_custom_theme')) {
@@ -933,11 +936,7 @@ function pipjqui_load_alternate_theme( string $theme ): void
  *     pipjqui_load_custom_theme($my_handle, $my_source, $my_dep);
  *   }
  * }
- * add_action('wp_enqueue_scripts', 'theme_stub_load_jqui_theme', PHP_INT_MAX);
- *
- * Calling it late makes sure pipfrosch-jquery-ui is loaded so that
- *  pipjqui_load_custom_theme will have been defined and the
- *  jquery-ui-theme-active handle will have been registered.
+ * add_action('wp_enqueue_scripts', 'theme_stub_load_jqui_theme');
  *
  * @param string $handle     The handle to use for your custom jQuery UI Theme
  * @param string $src        The URI path to the CSS for your custom jQuery UI Them
@@ -948,18 +947,22 @@ function pipjqui_load_alternate_theme( string $theme ): void
  *
  * @return void
  */
-function pipjqui_load_custom_theme( string $handle, string $src, string $dependency='base' ): void
+function pipjqui_load_custom_theme( string $handle, string $src, string $dependency='default' ): void
 {
   // use the WordPress version if we can't detect WordPress Theme version
   $version = pipjqui_get_active_theme_version();
-  // try to detect theme version
+  $default = pipjqui_get_default_theme_option();
   
   if ( strlen( trim( $dependency ) ) === 0 ) {
     wp_register_style( $handle, $src, array(), $version );
-  } elseif ( $dependency === 'base' ) {
-    wp_register_style( $handle, $src, array( 'jquery-ui-theme-base' ), $version );
   } else {
-    $dep_handle = 'jquery-ui-' . pipjqui_theme_to_stub( $dependency );
+    $stub = strtolower( sanitize_text_field( $dependency ) );
+    $stub = preg_replace('/\s+/', '-', $stub);
+    $valid = pipjqui_default_themes( true );
+    if ( in_array( $stub, $valid ) ) {
+      $stub = $default;
+    }
+    $dep_handle = 'jquery-ui-theme-' . $stub;
     wp_register_style( $handle, $src, array( $dep_handle ), $version );
   }
   wp_deregister_style( 'jquery-ui-theme-active' );
