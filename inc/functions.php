@@ -547,7 +547,7 @@ function pipjqui_update_wpcore_jqueryui()
 }
 
 /**
- * Preload jquery, theme, and friends
+ * Prefetch jquery-ui and if also not enqueued, core and migrate
  *
  * @return void
  */
