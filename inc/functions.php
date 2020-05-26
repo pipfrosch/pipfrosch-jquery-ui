@@ -305,7 +305,7 @@ function pipjqui_register_themes(): void
     switch ( $cdnhost ) {
       case 'jQuery.com CDN':
         $base = 'https://code.jquery.com/ui/';
-        $path = '/themes/' . $stub . '/jquery-ui.css';
+        $path = '/themes/' . $stub . '/jquery-ui.min.css';
         $src = $base . PIPJQUIV . $path;
         wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );
         break;
