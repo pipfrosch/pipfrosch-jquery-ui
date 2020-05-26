@@ -297,7 +297,7 @@ function pipjqui_register_themes(): void
   // jquery-ui-theme-base
   $src = PIPJQUI_PLUGIN_WEBPATH . 'themes/base/jquery-ui.min.css';
   // when serving locally include non-null version parameter
-  wp_register_style( 'jquery-ui-theme-base', $src, array(), PIPJQUIV );
+  //wp_register_style( 'jquery-ui-theme-base', $src, array(), PIPJQUIV );
   
   $themes = pipjqui_default_themes( true );
   foreach ( $themes as $stub ) {
@@ -307,30 +307,29 @@ function pipjqui_register_themes(): void
         $base = 'https://code.jquery.com/ui/';
         $path = '/themes/' . $stub . '/jquery-ui.min.css';
         $src = $base . PIPJQUIV . $path;
-        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );
+        wp_register_style( $handle, $src, array(), null );
         break;
       case 'Microsoft CDN':
         $base = 'https://ajax.aspnetcdn.com/ajax/jquery.ui/';
         $path =  '/themes/' . $stub . '/jquery-ui.min.css';
         $src = $base . PIPJQUIV . $path;
-        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );        
+        wp_register_style( $handle, $src, array(), null );        
         break;
       case 'CloudFlare CDNJS':
         $base = 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/';
         $path = '/themes/' . $stub . '/jquery-ui.min.css';
         $src = $base . PIPJQUIV . $path;
-        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );
+        wp_register_style( $handle, $src, array(), null );
         break;
       case 'Google CDN':
         $base = 'https://ajax.googleapis.com/ajax/libs/jqueryui/';
         $path = '/themes/' . $stub . '/jquery-ui.min.css';
         $src = $base . PIPJQUIV . $path;
-        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );
+        wp_register_style( $handle, $src, array(), null );
         break;
       default:
         $src = PIPJQUI_PLUGIN_WEBPATH . 'themes/' . $stub . '/jquery-ui.min.css';
         // when serving locally include non-null version parameter
-        //  when serving locally, we do not need base as fall-back dep
         wp_register_style( $handle, $src, array(), PIPJQUIV );
     }
   }

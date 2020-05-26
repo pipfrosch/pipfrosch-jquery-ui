@@ -38,35 +38,9 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
     return $html;
   }
   $themestub = preg_replace('/jquery-ui-theme-/', '', $handle);
-
-  // hashes to use with unminified themes
-  $hashes_bloated = array(
-    'jquery-ui-theme-black-tie'      => 'sha256-GoHAaz6rZ9vWIl8NqcaR1Sw+khKk1WzAeMdegW32UWA=',
-    'jquery-ui-theme-blitzer'        => 'sha256-Dqz7i1wh9OJN1LZB7J06AqOtXCLOCsu93ogEm2LOZVg=',
-    'jquery-ui-theme-cupertino'      => 'sha256-MZF4MuMkEfGGlK1vfxD+52t9NdRYVOHhRtdKgPrqPB4=',
-    'jquery-ui-theme-dark-hive'      => 'sha256-430fmdsHlbyhcsmK+R+9wspVgGJBgjkWM5tuB2XC03U=',
-    'jquery-ui-theme-dot-luv'        => 'sha256-nMFc/Arw3qNXfeAsTFcQhouE2j0y/opaOerh6Hwzbac=',
-    'jquery-ui-theme-eggplant'       => 'sha256-RSjpd+rlIFi3UPnVNS2BTimivY7cG80ylALmfmiylcQ=',
-    'jquery-ui-theme-excite-bike'    => 'sha256-V8t2pH/kNt4uR+oXqSr4llRwO57sqSMZeF3MAFOXqKQ=',
-    'jquery-ui-theme-flick'          => 'sha256-yxEWE9G8cV0ozlp8HSy5r3keT6RRqxM80uNy3Ounv3o=',
-    'jquery-ui-theme-hot-sneaks'     => 'sha256-ZLKD1XbP5jIo5j5lKxCko6NzjhMpgf72SR4VW/v6XZY=',
-    'jquery-ui-theme-humanity'       => 'sha256-nAHctpD9aZtH+aV4m5TGwmK94W+c4olzRPfQuxNzHy8=',
-    'jquery-ui-theme-le-frog'        => 'sha256-+ZV+xgxPMxY3rXjBsF5BA6ENfj192LfbzKAZi30/oaw=',
-    'jquery-ui-theme-mint-choc'      => 'sha256-iSN80m429odBZ7aI9svrZ5HpEU+R07DcH0BXuGukeNI=',
-    'jquery-ui-theme-overcast'       => 'sha256-DTulLMsL5OaW4M19ZcBKUchHb/jN8cmIhnMTz2cLJrY=',
-    'jquery-ui-theme-pepper-grinder' => 'sha256-pE/A/Hedp/UAUMIPQl9ymGISd4OFHk18FMdhFznEPh8=',
-    'jquery-ui-theme-redmond'        => 'sha256-zUjGuUyp7YLmnOVJfWbGjkjC5AyYdNVhi17dlAdZyyE=',
-    'jquery-ui-theme-smoothness'     => 'sha256-+bdRwc0NKw+Rhi25h/7Z3aSHWLFeb0LKZ3lrRfSyFwI=',
-    'jquery-ui-theme-south-street'   => 'sha256-jHNrDR9Hsp+pj8EMxPLwdUNEHp8j6YexSExxRmNasX8=',
-    'jquery-ui-theme-start'          => 'sha256-GH61FxVLvSeEzukfQR8OcUfIlCQLlmentFQMLo4tkjE=',
-    'jquery-ui-theme-sunny'          => 'sha256-JzCn+vC3yW/o/qXEsaQDwnSPc6Xe66bD52VE/edl3z4=',
-    'jquery-ui-theme-swanky-purse'   => 'sha256-D59cs1ougaNpjsvhlccjR2q/O6NXmtFi0Thul5rnynk=',
-    'jquery-ui-theme-trontastic'     => 'sha256-Qca0tpwZtx4E6ebB+un72sLpfR++S/400RDhIbXswjc=',
-    'jquery-ui-theme-ui-darkness'    => 'sha256-RvaOcjdKda6lgto0g7nn6ScwwdHKZk+0SkqBIMB2bTk=',
-    'jquery-ui-theme-ui-lightness'   => 'sha256-cimC9VbkCJERZEjeG0EO341EjtUeTT7gAIGo2eHdcrw=',
-    'jquery-ui-theme-vader'          => 'sha256-0V1xTj3zT1+6rjmFeUGgUxWmzy970O1UdknsP20fuAo=' );
   // hashes to use with minified themes
-  $hashes_minified = array(
+  $sriarray = array(
+    'jquery-ui-theme-base'           => 'sha256-sEGfrwMkIjbgTBwGLVK38BG/XwIiNC/EAG9Rzsfda6A=',
     'jquery-ui-theme-black-tie'      => 'sha256-MyuxfsvHhD1wixmCD+gnc3zfEQWfKEExEbhgBDgsabM=',
     'jquery-ui-theme-blitzer'        => 'sha256-cGh5mDFMJ5QuokG76ZKcBaytEHTcHJOiTXhyxwokExk=',
     'jquery-ui-theme-cupertino'      => 'sha256-BQ3m8birKYRzXjofYJeErdZ/SMsXgOoBPXt0d6c3FZc=',
@@ -94,31 +68,11 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
 
   $sri     = pipjqui_get_option_as_boolean( 'pipjqui_sri' );
   if ( $sri ) {
-    // CDNs that minify CSS
-    $effecient = array(
-      'jQuery.com CDN',
-//      'Microsoft CDN',
-      'jsDelivr CDN',
-      'CloudFlare CDNJS',
-      'Google CDN'
-    );
-    // get the cdn
-    $cdnhost = pipjqui_get_cdnhost_option();
-    if ( in_array( $cdnhost, $effecient ) ) {
-      $sriarray = $hashes_minified;
-    } else {
-      $sriarray = $hashes_bloated;
-    }
     $srihash = $sriarray[$handle];
     $cdnstring = '" integrity="' . $srihash . '" crossorigin="anonymous"';
   } else {
     $cdnstring = '" crossorigin="anonymous"';
   }
   $src = PIPJQUI_PLUGIN_WEBPATH . 'themes/' . $themestub . '/jquery-ui.min.css' . '?ver=' . PIPJQUIV ;
-  $html  = '<!-- fallback for CDN CSS failure -->' . PHP_EOL;
-  $html .= '<script>' . PHP_EOL;
-  $html .= 'function jquicssfb() {' . PHP_EOL;
-  $html .= '  document.write(\'<link rel="stylesheet" href="' . $src . '" type="text/css" media="' . $media . '" />\');' . PHP_EOL;
-  $html .= '}' . PHP_EOL . '</script>' . PHP_EOL;
   return '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" onerror="this.crossorigin=null;this.integrity=null;this.onerror=null;this.href=\'' . $src . '\';" />' . PHP_EOL;  
 }
