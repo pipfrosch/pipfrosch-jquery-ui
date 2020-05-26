@@ -752,7 +752,7 @@ function pipjqui_options_page_form(): void
  *
  * @return void
  */
-function pipjq_register_settings(): void
+function pipjqui_register_settings(): void
 {
   if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
     register_setting( PIPJQUI_OPTIONS_GROUP,
