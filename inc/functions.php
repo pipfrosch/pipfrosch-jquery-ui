@@ -753,7 +753,7 @@ function pipjqui_options_page_form(): void
  */
 function pipjqui_register_settings(): void
 {
-  if ( ! defined( 'PIPJQ_OPTIONS_GROUP' ) ) {
+  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
     register_setting( PIPJQUI_OPTIONS_GROUP,
                       'pipjqui_cdn',
                       array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
@@ -766,23 +766,6 @@ function pipjqui_register_settings(): void
     register_setting( PIPJQUI_OPTIONS_GROUP,
                       'pipjqui_demo',
                       array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
-  } else {
-  register_setting( PIPJQ_OPTIONS_GROUP,
-                    'pipjqui_demo',
-                      array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
-  }
-  if ( defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
-    add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
-                          'jQuery UI Options',
-                          'pipjqui_settings_form_text_helpers',
-                          PIPJQ_SETTINGS_PAGE_SLUG_NAME );
-    add_settings_field( 'pipjqui_demo',
-                        __( 'Enable', 'pipfrosch-jqueryui' ) . ' jQuery UI ' . __( 'Demo', 'pipfrosch-jqueryui' ),
-                        'pipjqui_demo_input_tag',
-                        PIPJQ_SETTINGS_PAGE_SLUG_NAME,
-                        PIPJQUI_SECTION_SLUG_NAME,
-                        array( 'label_for' => 'pipjqui_demo' ) );
-  } else {
     add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
                           'jQuery UI Options',
                           'pipjqui_settings_form_text_helpers',
@@ -812,8 +795,21 @@ function pipjqui_register_settings(): void
                         PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
+  } else {
+    register_setting( PIPJQ_OPTIONS_GROUP,
+                      'pipjqui_demo',
+                      array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
+    add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
+                          'jQuery UI Options',
+                          'pipjqui_settings_form_text_helpers',
+                          PIPJQ_SETTINGS_PAGE_SLUG_NAME );
+    add_settings_field( 'pipjqui_demo',
+                        __( 'Enable', 'pipfrosch-jqueryui' ) . ' jQuery UI ' . __( 'Demo', 'pipfrosch-jqueryui' ),
+                        'pipjqui_demo_input_tag',
+                        PIPJQ_SETTINGS_PAGE_SLUG_NAME,
+                        PIPJQUI_SECTION_SLUG_NAME,
+                        array( 'label_for' => 'pipjqui_demo' ) );
   }
-  
 }
 
 /**
@@ -898,7 +894,7 @@ function pipjqui_load_alternate_theme( string $theme ): void
  */
 function pipjqui_load_custom_theme( string $handle, string $src, string $dependency='base' ): void
 {
-  // use the WordPress version if we can detect theme version
+  // use the WordPress version if we can't detect WordPress Theme version
   $version = pipjqui_get_active_theme_version();
   // try to detect theme version
   
