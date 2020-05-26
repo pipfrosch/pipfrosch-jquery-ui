@@ -37,6 +37,7 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
   if ( ! $cdn ) {
     return $html;
   }
+  $themestub = preg_replace('/jquery-ui-theme-/', '', $handle);
 
   // hashes to use with unminified themes
   $hashes_bloated = array(
@@ -113,5 +114,5 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
   } else {
     $cdnstring = '" crossorigin="anonymous"';
   }
-  return '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" onerror="window.alert(\'foo\');" />' . PHP_EOL;  
+  return '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" onerror="window.alert(\'' . $themestub . '\');" />' . PHP_EOL;  
 }
