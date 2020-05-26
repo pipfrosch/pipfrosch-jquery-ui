@@ -33,6 +33,10 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
   if ( ! in_array( $handle, $myhandles ) ) {
     return $html;
   }
+  $cdn = pipjqui_get_option_as_boolean( 'pipjqui_cdn', false );
+  if ( ! $cdn ) {
+    return $html;
+  }
 
   // hashes to use with unminified themes
   $hashes_bloated = array(
@@ -107,5 +111,5 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
   } else {
     $cdnstring = '" crossorigin="anonymous"';
   }
-  return '<link rel="stylesheet" id="' . $handle . '" href="' . $href . $cdnstring . ' media="' . $media . '" />' . PHP_EOL;  
+  return '<link rel="stylesheet" id="' . $handle . '" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" />' . PHP_EOL;  
 }
