@@ -565,13 +565,13 @@ function pipjqui_resource_prefetch(): void
     if ( defined( 'PIPJQ_PLUGIN_VERSION' ) && function_exists( 'pipjq_script_src' ) ) {
       $jqcobj = pipjq_script_src( $hostoption );
       if ( ! wp_script_is( 'pipfrosch-jquery-core' ) ) {
-        $html .= '<link rel="prefetch" href="' $jqcobj->jquery . '" ' . $crossorigin . '/>' . PHP_EOL;
-        $html .= '<link rel="prefetch" href="' $jqcobj->migrate . '" ' . $crossorigin . '/>' . PHP_EOL;
+        $html .= '<link rel="prefetch" href="' . $jqcobj->jquery . '" ' . $crossorigin . '/>' . PHP_EOL;
+        $html .= '<link rel="prefetch" href="' . $jqcobj->migrate . '" ' . $crossorigin . '/>' . PHP_EOL;
       } elseif( ! wp_script_is( 'pipfrosch-jquery-migrate' ) ) {
-        $html .= '<link rel="prefetch" href="' $jqcobj->migrate . '" ' . $crossorigin . '/>' . PHP_EOL;
+        $html .= '<link rel="prefetch" href="' . $jqcobj->migrate . '" ' . $crossorigin . '/>' . PHP_EOL;
       }
     }
-    $html .= PHP_EOL . '<link rel="prefetch" href="' $srcobj->jqueryui . '" ' . $crossorigin . ' />' . PHP_EOL;
+    $html .= PHP_EOL . '<link rel="prefetch" href="' . $srcobj->jqueryui . '" ' . $crossorigin . ' />' . PHP_EOL;
     echo $html;
   }
 }
