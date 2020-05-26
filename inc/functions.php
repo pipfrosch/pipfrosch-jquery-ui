@@ -311,7 +311,7 @@ function pipjqui_register_themes(): void
         break;
       case 'Microsoft CDN':
         $base = 'https://ajax.aspnetcdn.com/ajax/jquery.ui/';
-        $path =  '/themes/' . $stub . '/jquery-ui.css';
+        $path =  '/themes/' . $stub . '/jquery-ui.min.css';
         $src = $base . PIPJQUIV . $path;
         wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );        
         break;

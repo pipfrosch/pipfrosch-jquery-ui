@@ -96,8 +96,10 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
     // CDNs that minify CSS
     $effecient = array(
       'jQuery.com CDN',
+      'Microsoft CDN',
       'jsDelivr CDN',
       'CloudFlare CDNJS',
+      'Google CDN'
     );
     // get the cdn
     $cdnhost = pipjqui_get_cdnhost_option();
