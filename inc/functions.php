@@ -824,7 +824,7 @@ function pipjqui_register_settings(): void
  */
 function pipjqui_register_options_page(): void
 {
-  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE !== "1" ) {
+  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
     add_options_page( 'jQuery UI ' . PIPJQUIV . ' ' . __( 'Options', 'pipfrosch-jqueryui' ),
                       'jQuery UI ' . __( 'Options', 'pipfrosch-jqueryui' ),
                       'manage_options',
