@@ -24,7 +24,6 @@ function pipjqui_get_option_as_boolean( string $option, bool $default = true ) {
       case 'sri':
         return pipjq_get_option_as_boolean( $option, $default );
         break;
-      }
     }
   }
   $test = get_option( $option );
