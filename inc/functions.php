@@ -727,7 +727,7 @@ function pipjqui_options_page_form(): void
   $s = array( '/CDN$/' , '/CDNJS/' );
   $r = array( '<abbr>CDN</abbr>' , '<abbr>CDNJS</abbr>' );
   $cdnhost = preg_replace($s, $r, $cdnhost);
-  $html  = '    <h2>Pipfrosch jQuery UI' . __('Plugin Management', 'pipfrosch-jqueryui') . '</h2>' . PHP_EOL;
+  $html  = '    <h2>Pipfrosch jQuery UI ' . __('Plugin Management', 'pipfrosch-jqueryui') . '</h2>' . PHP_EOL;
   $html .= '    <p>jQuery UI ' . __( 'Version', 'pipfrosch-jqueryui') . ': ' . PIPJQUIV . '</p>' . PHP_EOL;
   $html .= '    <p>' . __( 'Current', '') . ' <abbr title="' . esc_attr__( 'Content Distribution Network' , 'pipfrosch-jqueryui');
   $html .= '">CDN</abbr>: ' . $cdnhost . ' ' . $parenthesis . '</p>' . PHP_EOL;
@@ -798,7 +798,7 @@ function pipjqui_register_settings(): void
     // Translators: CDN is an abbreviation and should not be translated
     add_settings_field( 'pipjqui_cdnhost',
                         __( 'Select Public CDN Service', 'pipfrosch-jqueryui' ),
-                        'pipjq_cdnhost_select_tag',
+                        'pipjqui_cdnhost_select_tag',
                         PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_cdnhost' ) );
@@ -824,7 +824,7 @@ function pipjqui_register_options_page(): void
 {
   if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE !== "1" ) {
     add_options_page( 'jQuery UI ' . PIPJQUIV . ' ' . __( 'Options', 'pipfrosch-jqueryui' ),
-                      'jQuery ' . __( 'Options', 'pipfrosch-jqueryui' ),
+                      'jQuery UI ' . __( 'Options', 'pipfrosch-jqueryui' ),
                       'manage_options',
                       'pipfrosch_jqueryui',
                       'pipjqui_options_page_form' );
