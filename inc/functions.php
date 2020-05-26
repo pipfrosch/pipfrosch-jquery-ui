@@ -776,7 +776,7 @@ function pipjqui_register_settings(): void
                         __( 'Enable', 'pipfrosch-jqueryui' ) . ' jQuery UI ' . __( 'Demo', 'pipfrosch-jqueryui' ),
                         'pipjqui_demo_input_tag',
                         PIPJQ_SETTINGS_PAGE_SLUG_NAME,
-                        PIPJQ_SECTION_SLUG_NAME,
+                        PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
   } else {
     add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
