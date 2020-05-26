@@ -26,7 +26,7 @@ define( "PIPJQUI_PLUGIN_VERSION", '0.0.2pre' );
 /* defines for settings API here */
 define( "PIPJQUI_OPTIONS_GROUP", 'pipjqui_opgroup');
 define( "PIPJQUI_SECTION_SLUG_NAME", 'pipjqui_settings_form' );
-define( "PIPJQUI_SETTINGS_PAGE_SLUG_NAME", 'pipjqui_options');
+define( "PIPJQUI_SETTINGS_PAGE_SLUG_NAME", 'pipjq_ui_options');
 
 if ( defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) && function_exists( 'pipjq_options_page_form' ) ) {
   define( "PIPJQUI_USE_EXISTING_SETTINGS_PAGE", "1" );
