@@ -7,5 +7,6 @@ delete_option( 'pipjqui_plugin_version' );
 delete_option( 'pipjqui_cdn' );
 delete_option( 'pipjqui_sri' );
 delete_option( 'pipjqui_cdnhost' );
+delete_option( 'pipjqui_default_theme' );
 delete_option( 'pipjqui_jquery_ui_version' );
 delete_option( 'pipjqui_demo' );

@@ -113,6 +113,26 @@ function pipjqui_get_cdnhost_option(): string
 }
 
 /**
+ * Get default theme option and return as sanitized stub.
+ *
+ * @return string
+ */
+function pipjqui_get_default_theme_option(): string
+{
+  $default = 'base';
+  $test = get_option( 'pipjqui_default_theme' );
+  if ( ! is_string( $test ) ) {
+    add_option( 'pipjqui_default_theme', $default );
+    return $default;
+  }
+  $clean = pipjqui_theme_to_stub( $test );
+  if ( $clean !== $test ) {
+    update_option( 'pipjqui_default_theme', $clean );
+  }
+  return $clean;
+}
+
+/**
  * Initialize options
  *
  * This function makes sure the options are defined in the WordPress options
@@ -126,6 +146,7 @@ function pipjqui_initialize_options() {
   $foo = pipjqui_get_option_as_boolean( 'pipjqui_sri' );
   $foo = pipjqui_get_option_as_boolean( 'pipjqui_demo', false );
   $foo = pipjqui_get_cdnhost_option();
+  $foo = pipjqui_get_default_theme_option();
   $test = get_option( 'pipjqui_plugin_version' );
   if ( ( is_bool ($test) ) && ( ! $test ) ) {
       add_option( 'pipjqui_plugin_version', PIPJQUI_PLUGIN_VERSION );
@@ -194,9 +215,55 @@ function pipjqui_get_cdnhost(): string
 }
 
 /**
+ * Outputs an array of default themes.
+ *
+ * @param bool $stub Whether or not to output as stubs
+ *
+ * @return array
+ */
+function pipjqui_default_themes( bool $stub = false ): array
+{
+  $standard = array( 'Base',
+                     'Black Tie',
+                     'Blitzer',
+                     'Cupertino',
+                     'Dark Hive',
+                     'Dot-Luv',
+                     'Eggplant',
+                     'Excite-Bike',
+                     'Flick',
+                     'Hot-Sneaks',
+                     'Humanity',
+                     'Le-Frog',
+                     'Mint-Choc',
+                     'Overcast',
+                     'Pepper-Grinder',
+                     'Redmond',
+                     'Smoothness',
+                     'South-Street',
+                     'Start',
+                     'Sunny',
+                     'Swanky-Purse',
+                     'Trontastic',
+                     'UI-Darkness',
+                     'UI-Lightness',
+                     'Vader' );
+  if ( $stub ) {
+    $rs = array();
+    foreach ( $standard as $theme ) {
+      $stub = strtolower( sanitize_text_field( $theme ) );
+      $stub = preg_replace('/\s+/', '-', $stub);
+      $rs[] = $stub;
+    }
+    return $rs;
+  }
+  return $standard;
+}
+
+/**
  * Takes a theme (or stub) name and returns the corresponding stub.
  *
- * This function will return 'humanity' if the specified theme does
+ * This function will return 'base' if the specified theme does
  *  not exist.
  *
  * @param string $theme The jQuery UI Theme to convert to a stub
@@ -207,34 +274,11 @@ function pipjqui_theme_to_stub( string $theme ): string
 {
   $stub = strtolower( sanitize_text_field( $theme ) );
   $stub = preg_replace('/\s+/', '-', $stub);
-  $standard = array( 'black-tie',
-                     'blitzer',
-                     'cupertino',
-                     'dark-hive',
-                     'dot-luv',
-                     'eggplant',
-                     'excite-bike',
-                     'flick',
-                     'hot-sneaks',
-                     'humanity',
-                     'le-frog',
-                     'mint-choc',
-                     'overcast',
-                     'pepper-grinder',
-                     'redmond',
-                     'smoothness',
-                     'south-street',
-                     'start',
-                     'sunny',
-                     'swanky-purse',
-                     'trontastic',
-                     'ui-darkness',
-                     'ui-lightness',
-                     'vader');
-  if ( in_array( $stub, $standard ) ) {
+  $arr = pipjqui_default_themes( true );
+  if ( in_array( $stub, $arr ) ) {
     return $stub;
   }
-  return 'humanity';
+  return 'base';
 }
 
 /**
@@ -255,34 +299,9 @@ function pipjqui_register_themes(): void
   // when serving locally include non-null version parameter
   wp_register_style( 'jquery-ui-base', $src, array(), PIPJQUIV );
   
-  
   $stub = 'humanity';
-  $themes = array( 'Black Tie',
-                   'Blitzer',
-                   'Cupertino',
-                   'Dark-Hive',
-                   'Dot-Luv',
-                   'Eggplant',
-                   'Excite-Bike',
-                   'Flick',
-                   'Hot-Sneaks',
-                   'Humanity',
-                   'Le-Frog',
-                   'Mint-Choc',
-                   'Overcast',
-                   'Pepper-Grinder',
-                   'Redmond',
-                   'Smoothness',
-                   'South-Street',
-                   'Start',
-                   'Sunny',
-                   'Swanky-Purse',
-                   'Trontastic',
-                   'UI-Darkness',
-                   'UI-Lightness',
-                   'Vader');
-  foreach ( $themes as $theme ) {
-    $stub = pipjqui_theme_to_stub( $theme );
+  $themes = pipjqui_default_themes( true );
+  foreach ( $themes as $stub ) {
     $handle = 'jquery-ui-theme-' . $stub;
     switch ( $cdnhost ) {
       case 'jQuery.com CDN':
@@ -685,7 +704,6 @@ function pipjqui_demo_input_tag(): void
 function pipjqui_cdnhost_select_tag(): void
 {
   $cdnhost = pipjqui_get_cdnhost_option();
-  // translators: This array is of proper names and they do not get translated
   $values = array( 'jQuery.com CDN',
                    'CloudFlare CDNJS',
                    'jsDelivr CDN',
@@ -698,6 +716,28 @@ function pipjqui_cdnhost_select_tag(): void
       $selected = ' selected="selected"';
     }
     $html .= '  <option value="' . $value . '"' . $selected . '>' . $value . '</option>' . PHP_EOL;
+  }
+  $html .= '</select>' . PHP_EOL;
+  echo $html;
+}
+
+/**
+ * Generates select and child options for the ‘Select Defaults UI Theme’ menu.
+ *
+ * @return void
+ */
+function pipjqui_uithemes_select_tag(): void
+{
+  $themestub = 'humanity';
+  $themes = pipjqui_default_themes();
+  $html = '<select name="pipjqui_default_theme" id="pipjqui_default_theme">' . PHP_EOL;
+  foreach ( $themes as $theme ) {
+    $stub = pipjqui_theme_to_stub( $theme );
+    $selected = '';
+    if ( $themestub === $stub ) {
+      $selected = ' selected="selected"';
+    }
+    $html .= '  <option value="' . $stub . '"' . $selected . '>' . $theme . '</option>' . PHP_EOL;
   }
   $html .= '</select>' . PHP_EOL;
   echo $html;
@@ -766,6 +806,9 @@ function pipjqui_register_settings(): void
     register_setting( PIPJQUI_OPTIONS_GROUP,
                       'pipjqui_demo',
                       array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
+    register_setting( PIPJQUI_OPTIONS_GROUP,
+                      'pipjqui_default_theme',
+                      array( 'sanitize_callback' => 'pipjqui_theme_to_stub' ) );
     add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
                           'jQuery UI Options',
                           'pipjqui_settings_form_text_helpers',
@@ -795,10 +838,19 @@ function pipjqui_register_settings(): void
                         PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
+    add_settings_field( 'pipjqui_default_theme'
+                        __( 'Select Default UI Theme', 'pipfrosch-jqueryui' ),
+                        'pipjqui_uithemes_select_tag',
+                        PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
+                        PIPJQUI_SECTION_SLUG_NAME,
+                        array( 'label_for' => 'pipjqui_default_theme' ) );
   } else {
     register_setting( PIPJQ_OPTIONS_GROUP,
                       'pipjqui_demo',
                       array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
+    register_setting( PIPJQ_OPTIONS_GROUP,
+                      'pipjqui_default_theme',
+                      array( 'sanitize_callback' => 'pipjqui_theme_to_stub' ) );
     add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
                           'jQuery UI Options',
                           'pipjqui_settings_form_text_helpers',
@@ -809,6 +861,12 @@ function pipjqui_register_settings(): void
                         PIPJQ_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
+    add_settings_field( 'pipjqui_default_theme'
+                        __( 'Select Default UI Theme', 'pipfrosch-jqueryui' ),
+                        'pipjqui_uithemes_select_tag',
+                        PIPJQ_SETTINGS_PAGE_SLUG_NAME,
+                        PIPJQUI_SECTION_SLUG_NAME,
+                        array( 'label_for' => 'pipjqui_default_theme' ) );
   }
 }
 
