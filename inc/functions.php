@@ -335,7 +335,7 @@ function pipjqui_register_themes(): void
     }
   }
   $active = pipjqui_get_default_theme_option();
-  $handle = 'jquery-ui-' . pipjqui_theme_to_stub( $active );
+  $handle = 'jquery-ui-theme-' . pipjqui_theme_to_stub( $active );
   wp_register_style( 'jquery-ui-theme-active', false, array( $handle ), null );
   add_filter( 'style_loader_tag', 'pipjqui_theme_cdn_attributes', 10, 3 );
 }
