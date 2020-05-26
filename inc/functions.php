@@ -553,11 +553,15 @@ function pipjqui_update_wpcore_jqueryui()
  */
 function pipjqui_resource_prefetch(): void
 {
-  $hostoption = pipjqui_get_cdnhost_option();
+  $hostoption = 'localhost';
+  $cdn = pipjqui_get_option_as_boolean( 'pipjqui_cdn', false );
+  if ( $cdn ) {
+    $hostoption = pipjqui_get_cdnhost_option();
+  }
   $crossorigin = '';
   $srcobj = pipjqui_script_src( $hostoption );
   $source = $srcobj->jqueryui;
-  if ( $srcobj->cdn ) {
+  if ( $cdn ) {
     $crossorigin = 'crossorigin="anonymous" ';
   } else {
     $source .= '?ver=' . PIPJQUIV;
