@@ -95,7 +95,7 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
   if ( $sri ) {
     // CDNs that minify CSS
     $effecient = array(
-      'Microsoft CDN',
+      'jQuery.com CDN',
       'jsDelivr CDN',
       'CloudFlare CDNJS',
     );
