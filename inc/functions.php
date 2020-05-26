@@ -297,7 +297,7 @@ function pipjqui_register_themes(): void
   // jquery-ui-theme-base
   $src = PIPJQUI_PLUGIN_WEBPATH . 'themes/base/jquery-ui.min.css';
   // when serving locally include non-null version parameter
-  wp_register_style( 'jquery-ui-base', $src, array(), PIPJQUIV );
+  wp_register_style( 'jquery-ui-theme-base', $src, array(), PIPJQUIV );
   
   $themes = pipjqui_default_themes( true );
   foreach ( $themes as $stub ) {
@@ -307,25 +307,25 @@ function pipjqui_register_themes(): void
         $base = 'https://code.jquery.com/ui/';
         $path = '/themes/' . $stub . 'jquery-ui.css';
         $src = $base . PIPJQUIV . $path;
-        wp_register_style( $handle, $src, array('jquery-ui-base'), null );
+        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );
         break;
       case 'Microsoft CDN':
         $base = 'https://ajax.aspnetcdn.com/ajax/jquery.ui/';
         $path =  '/themes/' . $stub . 'jquery-ui.css';
-        wp_register_style( $handle, $src, array('jquery-ui-base'), null );
+        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );
         $src = $base . PIPJQUIV . $path;
         break;
       case 'CloudFlare CDNJS':
         $base = 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/';
         $path = '/themes/' . $stub . '/jquery-ui.min.css';
         $src = $base . PIPJQUIV . $path;
-        wp_register_style( $handle, $src, array('jquery-ui-base'), null );
+        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );
         break;
       case 'Google CDN':
         $base = 'https://ajax.googleapis.com/ajax/libs/jqueryui/';
         $path = '/themes/' . $stub . '/jquery-ui.min.css';
         $src = $base . PIPJQUIV . $path;
-        wp_register_style( $handle, $src, array('jquery-ui-base'), null );
+        wp_register_style( $handle, $src, array('jquery-ui-theme-base'), null );
         break;
       default:
         $src = PIPJQUI_PLUGIN_WEBPATH . 'themes/' . $stub . '/jquery-ui.min.css';
@@ -958,7 +958,7 @@ function pipjqui_load_custom_theme( string $handle, string $src, string $depende
   if ( strlen( trim( $dependency ) ) === 0 ) {
     wp_register_style( $handle, $src, array(), $version );
   } elseif ( $dependency === 'base' ) {
-    wp_register_style( $handle, $src, array( 'jquery-ui-base' ), $version );
+    wp_register_style( $handle, $src, array( 'jquery-ui-theme-base' ), $version );
   } else {
     $dep_handle = 'jquery-ui-' . pipjqui_theme_to_stub( $dependency );
     wp_register_style( $handle, $src, array( $dep_handle ), $version );
