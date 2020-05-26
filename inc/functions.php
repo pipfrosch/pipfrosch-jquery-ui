@@ -838,7 +838,7 @@ function pipjqui_register_settings(): void
                         PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
-    add_settings_field( 'pipjqui_default_theme'
+    add_settings_field( 'pipjqui_default_theme',
                         __( 'Select Default UI Theme', 'pipfrosch-jqueryui' ),
                         'pipjqui_uithemes_select_tag',
                         PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
@@ -861,7 +861,7 @@ function pipjqui_register_settings(): void
                         PIPJQ_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
-    add_settings_field( 'pipjqui_default_theme'
+    add_settings_field( 'pipjqui_default_theme',
                         __( 'Select Default UI Theme', 'pipfrosch-jqueryui' ),
                         'pipjqui_uithemes_select_tag',
                         PIPJQ_SETTINGS_PAGE_SLUG_NAME,
