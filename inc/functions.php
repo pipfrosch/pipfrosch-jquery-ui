@@ -20,8 +20,9 @@ function pipjqui_get_option_as_boolean( string $option, bool $default = true ) {
   if ( defined( 'PIPJQ_PLUGIN_VERSION' ) && function_exists( 'pipjq_get_option_as_boolean' ) ) {
     // Defer to pipfrosch jQuery for some settings
     switch ($option) {
-      case 'cdn':
-      case 'sri':
+      case 'pipjqui_cdn':
+      case 'pipjqui_sri':
+        $option = preg_replace( '/^pipjqui/', 'pipjq', $option );
         return pipjq_get_option_as_boolean( $option, $default );
         break;
     }
