@@ -545,6 +545,36 @@ function pipjqui_update_wpcore_jqueryui()
     }
   }
 }
+
+/**
+ * Preload jquery, theme, and friends
+ *
+ * @return void
+ */
+function pipjqui_resource_prefetch(): void
+{
+  $preload = true;
+  if ( $preload ) {
+    $hostoption = pipjqui_get_cdnhost_option();
+    $crossorigin = '';
+    $srcobj = pipjqui_script_src( $hostoption );
+    if ( $srcobj->cdn ) {
+      $crossorigin = 'crossorigin="anonymous"';
+    }
+    $html .= PHP_EOL . '<!-- Pipfrosch jQuery Preload -->' . PHP_EOL;
+    if ( defined( 'PIPJQ_PLUGIN_VERSION' ) && function_exists( 'pipjq_script_src' ) ) {
+      $jqcobj = pipjq_script_src( $hostoption );
+      if ( ! wp_script_is( 'pipfrosch-jquery-core' ) ) {
+        $html .= '<link rel="prefetch" href="' $jqcobj->jquery . '" ' . $crossorigin . '/>' . PHP_EOL;
+        $html .= '<link rel="prefetch" href="' $jqcobj->migrate . '" ' . $crossorigin . '/>' . PHP_EOL;
+      } elseif( ! wp_script_is( 'pipfrosch-jquery-migrate' ) ) {
+        $html .= '<link rel="prefetch" href="' $jqcobj->migrate . '" ' . $crossorigin . '/>' . PHP_EOL;
+      }
+    }
+    $html .= PHP_EOL . '<link rel="prefetch" href="' $srcobj->jqueryui . '" ' . $crossorigin . ' />' . PHP_EOL;
+    echo $html;
+  }
+}
   
 /**
  * Load default jQuery UI theme
@@ -561,6 +591,8 @@ function pipjqui_load_default_theme(): void
 {
   if ( wp_script_is( 'pipfrosch-jquery-ui-core' ) ) {
     wp_enqueue_style( 'jquery-ui-theme-active' );
+  } else {
+    add_action('wp_head', 'pipjqui_resource_prefetch');
   }
 }
 
