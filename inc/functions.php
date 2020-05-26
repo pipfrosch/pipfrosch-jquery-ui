@@ -124,8 +124,7 @@ function pipjqui_get_cdnhost_option(): string
 function pipjqui_initialize_options() {
   $foo = pipjqui_get_option_as_boolean( 'pipjqui_cdn', false );
   $foo = pipjqui_get_option_as_boolean( 'pipjqui_sri' );
-  // change below to false once I have menu working
-  pipjqui_get_option_as_boolean( 'pipjqui_demo' );
+  $foo = pipjqui_get_option_as_boolean( 'pipjqui_demo', false );
   $foo = pipjqui_get_cdnhost_option();
   $test = get_option( 'pipjqui_plugin_version' );
   if ( ( is_bool ($test) ) && ( ! $test ) ) {
@@ -613,7 +612,7 @@ function pipjqui_sanitize_checkbox( $input ): string
  */
 function pipjqui_settings_form_text_helpers(): void
 {
-  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE !== "1" ) {
+  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
     $string  = '<p>' . __( 'It is recommended that you enable the', 'pipfrosch-jqueryui' );
     $string .= ' <em>' . __( 'Use Content Distribution Network', 'pipfrosch-jqueryui' ) . '</em> ';
     $string .= __( 'option', 'pipfrosch-jqueryui' ) . '.</p>' . PHP_EOL;
@@ -754,7 +753,7 @@ function pipjqui_options_page_form(): void
  */
 function pipjqui_register_settings(): void
 {
-  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE !== "1" ) {
+  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
     register_setting( PIPJQUI_OPTIONS_GROUP,
                       'pipjqui_cdn',
                       array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
@@ -768,7 +767,7 @@ function pipjqui_register_settings(): void
   register_setting( PIPJQUI_OPTIONS_GROUP,
                     'pipjqui_demo',
                     array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
-  if ( PIPJQUI_USE_EXISTING_SETTINGS_PAGE === "1" ) {
+  if ( defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
     add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
                           'jQuery UI Options',
                           'pipjqui_settings_form_text_helpers',

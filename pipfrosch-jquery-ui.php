@@ -55,7 +55,7 @@ if ( is_admin() ) {
   //  dependency of jquery-ui-core and I do not need pipjqui_load_default_theme()
   add_action( 'wp_enqueue_scripts', 'pipjqui_load_default_theme', PHP_INT_MAX );
   // for the demo page - change below to false once I have menu working
-  $demo = pipjqui_get_option_as_boolean( 'pipjqui_demo' );
+  $demo = pipjqui_get_option_as_boolean( 'pipjqui_demo', false );
   if ( $demo ) {
     wp_register_style( 'pipjqui-democss', PIPJQUI_PLUGIN_WEBPATH . 'demo/pipjqui-demo.css', array(), '2' );
     wp_register_script( 'pipjqui-demojs', PIPJQUI_PLUGIN_WEBPATH . 'demo/pipjqui-demo.js', array('jquery-ui-core'), '1', true );
