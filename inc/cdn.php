@@ -120,5 +120,5 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
   $html .= 'function jquicssfb() {' . PHP_EOL;
   $html .= '  document.write(\'<link rel="stylesheet" href="' . $src . '" type="text/css" media="' . $media . '" />\');' . PHP_EOL;
   $html .= '}' . PHP_EOL . '</script>' . PHP_EOL;
-  return $html . '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" onerror="jquicssfb();" />' . PHP_EOL;  
+  return $html . '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" onerror="this.src=\'' . $src . '\'"  jquicssfb();" />' . PHP_EOL;  
 }
