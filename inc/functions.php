@@ -774,7 +774,7 @@ function pipjq_register_settings(): void
                           'pipjqui_settings_form_text_helpers',
                           PIPJQ_SETTINGS_PAGE_SLUG_NAME );
     add_settings_field( 'pipjqui_demo',
-                        'jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' );
+                        'jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' ),
                         PIPJQ_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
@@ -804,7 +804,7 @@ function pipjq_register_settings(): void
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_cdnhost' ) );
     add_settings_field( 'pipjqui_demo',
-                        'jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' );
+                        'jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' ),
                         PIPJQ_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
