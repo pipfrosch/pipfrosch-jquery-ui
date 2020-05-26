@@ -113,31 +113,6 @@ function pipjqui_get_cdnhost_option(): string
 }
 
 /**
- * Sanitize checkbox input.
- *
- * This plugin likes the faux boolean options set to be a string of "0" for false
- *  and "1" for true. The form sets a value a "1" when checked. If a string that
- *  evaluates as the integer 1 when recast to integer is supplies, this function
- *  will output the string "1". Any other value and it outputs the string "0".
- *
- * @param string The string passed to this callback from the WordPress options form
- *               processing.
- *
- * @return string
- */
-function pipjqui_sanitize_checkbox( string $input ): string
-{
-  $input = sanitize_text_field( $input );
-  if ( is_numeric( $input ) ) {
-    $num = intval( $input );
-    if ( $num === 1 ) {
-      return "1";
-    }
-  }
-  return "0";
-}
-
-/**
  * Initialize options
  *
  * This function makes sure the options are defined in the WordPress options
@@ -149,6 +124,8 @@ function pipjqui_sanitize_checkbox( string $input ): string
 function pipjqui_initialize_options() {
   $foo = pipjqui_get_option_as_boolean( 'pipjqui_cdn', false );
   $foo = pipjqui_get_option_as_boolean( 'pipjqui_sri' );
+  // change below to false once I have menu working
+  pipjqui_get_option_as_boolean( 'pipjqui_demo' );
   $foo = pipjqui_get_cdnhost_option();
   $test = get_option( 'pipjqui_plugin_version' );
   if ( ( is_bool ($test) ) && ( ! $test ) ) {
@@ -591,6 +568,268 @@ function pipjqui_get_active_theme_version()
     }
   }
   return false;
+}
+
+/* For Settings API */
+
+/**
+ * Sanitize checkbox input.
+ *
+ * This plugin likes the faux boolean options set to be a string of "0" for false
+ *  and "1" for true. The form sets a value a "1" when checked. If a string that
+ *  evaluates as the integer 1 when recast to integer is supplies, this function
+ *  will output the string "1". Any other value and it outputs the string "0".
+ *
+ * @param mixed The string passed to this callback from the WordPress options form
+ *              processing.
+ *
+ * @return string
+ */
+function pipjqui_sanitize_checkbox( $input ): string
+{
+  if ( is_bool( $input ) && $input ) {
+    return "1";
+  } 
+  if ( ! is_string( $input ) ) {
+    return "0";
+  }
+  $input = sanitize_text_field( $input );
+  if ( is_numeric( $input ) ) {
+    $num = intval( $input );
+    if ( $num === 1 ) {
+      return "1";
+    }
+  }
+  return "0";
+}
+
+/**
+ * Settings form helpers
+ *
+ * Callback function used by the WordPress core function `add_settings_section()`
+ *  to provide some recommendations for the plugin settings.
+ *
+ * @return void
+ */
+function pipjqui_settings_form_text_helpers(): void
+{
+  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
+    $string  = '<p>' . __( 'It is recommended that you enable the', 'pipfrosch-jqueryui' );
+    $string .= ' <em>' . __( 'Use Content Distribution Network', 'pipfrosch-jqueryui' ) . '</em> ';
+    $string .= __( 'option', 'pipfrosch-jqueryui' ) . '.</p>' . PHP_EOL;
+    $string .= '<p>' . __( 'It is recommended that you enable the', 'pipfrosch-jqueryui' );
+    $string .= ' <em>' . __( 'Use Subresource Integrity', 'pipfrosch-jqueryui' ) . '</em> ';
+    $string .= __( 'option (default)', 'pipfrosch-jqueryui' ) . '.</p>' . PHP_EOL;
+    echo $string;
+  }
+  $string .= '<p>' . __( 'Enabling the');
+  $string .= ' <em>jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' ) . '</em> ';
+  $string .= __('allows you to use the shortcode' , 'pipfrosch-jqueryui' );
+  $string .= ' <code>[jqueryui-demo]</code> ';
+  $string .= __( 'to test whether or not', 'pipfrosch-jqueryui' );
+  $string .= ' jQuery UI ';
+  $string .= __( 'is working' );
+  $string .= '.</p>' . PHP_EOL;
+  echo $string; 
+}
+
+/**
+ * Generate checkbox input HTML snippet for the ‘Use Content Distribution Network’ option.
+ *
+ * @return void
+ */
+function pipjqui_cdn_input_tag(): void
+{
+  $cdn = pipjqui_get_option_as_boolean( 'pipjqui_cdn', false );
+  $checked = '';
+  if ( $cdn ) {
+    $checked = ' checked="checked"';
+  }
+  echo '<input type="checkbox" name="pipjqui_cdn" id="pipjqui_cdn" value="1"' . $checked . '>';
+}
+
+/**
+ * Generate checkbox input HTML snippet for the ‘Use Subresource Integrity’ option.
+ *
+ * @return void
+ */
+function pipjqui_sri_input_tag(): void
+{
+  $sri = pipjqui_get_option_as_boolean( 'pipjqui_sri' );
+  $checked = '';
+  if ( $sri ) {
+    $checked = ' checked="checked"';
+  }
+  echo '<input type="checkbox" name="pipjqui_sri" id="pipjqui_sri" value="1"' . $checked . '>';
+}
+
+/**
+ * Generate checkbox input HTML snippet for the ‘jQuery UI demo’ option.
+ *
+ * @return void
+ */
+function pipjqui_demo_input_tag(): void
+{
+  $demo = pipjqui_get_option_as_boolean( 'pipjqui_demo', false );
+  $checked = '';
+  if ( $demo ) {
+    $checked = ' checked="checked"';
+  }
+  echo '<input type="checkbox" name="pipjqui_demo" id="pipjqui_demo" value="1"' . $checked . '>';
+}
+
+/**
+ * Generate select and child option tag HTML snippet for the ‘Select Public CDN Service’ menu.
+ *
+ * @return void
+ */
+function pipjqui_cdnhost_select_tag(): void
+{
+  $cdnhost = pipjqui_get_cdnhost_option();
+  // translators: This array is of proper names and they do not get translated
+  $values = array( 'jQuery.com CDN',
+                   'CloudFlare CDNJS',
+                   'jsDelivr CDN',
+                   'Microsoft CDN',
+                   'Google CDN' );
+  $html = '<select name="pipjqui_cdnhost" id="pipjqui_cdnhost">' . PHP_EOL;
+  foreach( $values as $value ) {
+    $selected = '';
+    if ( $cdnhost === $value ) {
+      $selected = ' selected="selected"';
+    }
+    $html .= '  <option value="' . $value . '"' . $selected . '>' . $value . '</option>' . PHP_EOL;
+  }
+  $html .= '</select>' . PHP_EOL;
+  echo $html;
+}
+
+/**
+ * Creates the HTML needed for the Settings API form.
+ *
+ * This function notifies the administrator what version of the jQuery UI library and
+ *  is available, as well as what Content Distribution Network is currently configured to be
+ *  used. It then creates the HTML <form/> node that an administrator can use to change the
+ *  settings associated with this WordPress plugin.
+ *  This function is called as a callback by the WordPress core function `add_options_page()`
+ *  to make the form available in the Settings menu.
+ *
+ * @return void
+ */
+function pipjqui_options_page_form(): void
+{
+  $cdn = pipjq_get_option_as_boolean( 'pipjqui_cdn', false );
+  $parenthesis = '(' . __( 'disabled', 'pipfrosch-jqueryui' ) . ')';
+  if ( $cdn ) {
+    $parenthesis = '(' . __( 'enabled', 'pipfrosch-jqueryui' ) . ')';
+  }
+  $cdnhost = pipjqui_get_cdnhost_option();
+  $s = array( '/CDN$/' , '/CDNJS/' );
+  $r = array( '<abbr>CDN</abbr>' , '<abbr>CDNJS</abbr>' );
+  $cdnhost = preg_replace($s, $r, $cdnhost);
+  $html  = '    <h2>Pipfrosch jQuery UI' . __('Plugin Management', 'pipfrosch-jqueryui') . '</h2>' . PHP_EOL;
+  $html .= '    <p>jQuery UI ' . __( 'Version', 'pipfrosch-jqueryui') . ': ' . PIPJQUIV . '</p>' . PHP_EOL;
+  $html .= '    <p>' . __( 'Current', '') . ' <abbr title="' . esc_attr__( 'Content Distribution Network' , 'pipfrosch-jqueryui');
+  $html .= '">CDN</abbr>: ' . $cdnhost . ' ' . $parenthesis . '</p>' . PHP_EOL;
+  $html .= '    <form method="post" action="options.php">' . PHP_EOL;
+  echo $html;
+  settings_fields( PIPJQUI_OPTIONS_GROUP );
+  do_settings_sections( PIPJQUI_SETTINGS_PAGE_SLUG_NAME );
+  $html  = '      <p>' . __( 'Note that the', 'pipfrosch-jqueryui' ) . ' <em>' . __( 'Use Subresource Integrity', 'pipfrosch-jqueryui' );
+  $html .= '</em> ' . __( 'option only has meaning when', 'pipfrosch-jqueryui' ) . ' <em>';
+  $html .= __( 'Use Content Distribution Network', 'pipfrosch-jqueryui' ) . '</em> ';
+  $html .= __( 'is enabled', 'pipfrosch-jqueryui') . '.</p>' . PHP_EOL;
+  $html .= get_submit_button() . PHP_EOL;
+  $html .= '    </form>' . PHP_EOL;
+  echo $html;
+}
+
+/**
+ * Set up the WordPress Settings API.
+ *
+ * This function is a callback added to the `admin_init` action by the WordPress
+ *  Core function `add_action()` function used in the main plugin PHP script.
+ *
+ * @return void
+ */
+function pipjq_register_settings(): void
+{
+  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
+    register_setting( PIPJQUI_OPTIONS_GROUP,
+                      'pipjqui_cdn',
+                      array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
+    register_setting( PIPJQUI_OPTIONS_GROUP,
+                      'pipjqui_sri',
+                      array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
+    register_setting( PIPJQUI_OPTIONS_GROUP,
+                      'pipjqui_cdnhost',
+                      array( 'sanitize_callback' => 'pipjqui_sanitize_cdnhost' ) );
+  }
+  register_setting( PIPJQUI_OPTIONS_GROUP,
+                    'pipjqui_demo',
+                    array( 'sanitize_callback' => 'pipjqui_sanitize_checkbox' ) );
+  if ( defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
+    add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
+                          'jQuery UI Options',
+                          'pipjqui_settings_form_text_helpers',
+                          PIPJQ_SETTINGS_PAGE_SLUG_NAME );
+    add_settings_field( 'pipjqui_demo',
+                        'jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' );
+                        PIPJQ_SETTINGS_PAGE_SLUG_NAME,
+                        PIPJQUI_SECTION_SLUG_NAME,
+                        array( 'label_for' => 'pipjqui_demo' ) );
+     )
+  } else {
+    add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
+                          'jQuery UI Options',
+                          'pipjqui_settings_form_text_helpers',
+                          PIPJQUI_SETTINGS_PAGE_SLUG_NAME );
+    add_settings_field( 'pipjqui_cdn',
+                        __( 'Use Content Distribution Network', 'pipfrosch-jqueryui' ),
+                        'pipjqui_cdn_input_tag',
+                        PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
+                        PIPJQUI_SECTION_SLUG_NAME,
+                        array( 'label_for' => 'pipjqui_cdn' ) );
+    add_settings_field( 'pipjqui_sri',
+                        __( 'Use Subresource Integrity', 'pipfrosch-jqueryui' ),
+                        'pipjqui_sri_input_tag',
+                        PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
+                        PIPJQUI_SECTION_SLUG_NAME,
+                        array( 'label_for' => 'pipjqui_sri' ) );
+    // Translators: CDN is an abbreviation and should not be translated
+    add_settings_field( 'pipjqui_cdnhost',
+                        __( 'Select Public CDN Service', 'pipfrosch-jqueryui' ),
+                        'pipjq_cdnhost_select_tag',
+                        PIPJQUI_SETTINGS_PAGE_SLUG_NAME,
+                        PIPJQUI_SECTION_SLUG_NAME,
+                        array( 'label_for' => 'pipjqui_cdnhost' ) );
+    add_settings_field( 'pipjqui_demo',
+                        'jQuery UI ' . __( 'demo', 'pipfrosch-jqueryui' );
+                        PIPJQ_SETTINGS_PAGE_SLUG_NAME,
+                        PIPJQUI_SECTION_SLUG_NAME,
+                        array( 'label_for' => 'pipjqui_demo' ) );
+  }
+  
+}
+
+/**
+ * Registers the Settings API form for changing options.
+ *
+ * Basically just wraps the WordPress Core function `add_options_page()`
+ *  in a callback added to the `admin_menu` action by the WordPress
+ *  Core function `add_action()` function used in the main plugin PHP script.
+ *
+ * @return void
+ */
+function pipjqui_register_options_page(): void
+{
+  if ( ! defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) ) {
+    add_options_page( 'jQuery UI ' . PIPJQUIV . ' ' . __( 'Options', 'pipfrosch-jqueryui' ),
+                      'jQuery ' . __( 'Options', 'pipfrosch-jqueryui' ),
+                      'manage_options',
+                      'pipfrosch_jqueryui',
+                      'pipjqui_options_page_form' );
+    }
 }
 
 /* Functions for theme developers to use */

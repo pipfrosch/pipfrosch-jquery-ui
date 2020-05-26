@@ -441,5 +441,8 @@ function pipjqui_shortcode_style() {
 
 
 function pipjqui_register_shortcodes() {
-  add_shortcode('jqueryui-demo', 'pipjqui_demo_shortcode');
+  // do not register if admin page
+  if ( ! is_admin() ) {
+    add_shortcode('jqueryui-demo', 'pipjqui_demo_shortcode');
+  }
 }
