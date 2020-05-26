@@ -24,15 +24,9 @@ define( "PIPJQUI_PLUGIN_WEBPATH", $pipjqui_url_array['path'] );
 define( "PIPJQUI_PLUGIN_VERSION", '0.0.2pre' );
 
 /* defines for settings API here */
-define( "PIPJQUI_OPTIONS_GROUP", 'pipjqui_opgroup');
+define( "PIPJQUI_OPTIONS_GROUP", 'pipjq_ui_opgroup');
 define( "PIPJQUI_SECTION_SLUG_NAME", 'pipjqui_settings_form' );
-define( "PIPJQUI_SETTINGS_PAGE_SLUG_NAME", 'pipjq_ui_options');
-
-if ( defined( 'PIPJQ_SETTINGS_PAGE_SLUG_NAME' ) && function_exists( 'pipjq_options_page_form' ) ) {
-  define( "PIPJQUI_USE_EXISTING_SETTINGS_PAGE", "1" );
-} else {
-  define( "PIPJQUI_USE_EXISTING_SETTINGS_PAGE", "0" );
-}
+define( "PIPJQUI_SETTINGS_PAGE_SLUG_NAME", 'pipjqui_options');
 
 require_once( PIPJQUI_PLUGIN_DIR . 'versions.php' );
 require_once( PIPJQUI_PLUGIN_DIR . 'inc/functions.php' );
