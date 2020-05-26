@@ -778,7 +778,6 @@ function pipjq_register_settings(): void
                         PIPJQ_SETTINGS_PAGE_SLUG_NAME,
                         PIPJQUI_SECTION_SLUG_NAME,
                         array( 'label_for' => 'pipjqui_demo' ) );
-     )
   } else {
     add_settings_section( PIPJQUI_SECTION_SLUG_NAME,
                           'jQuery UI Options',
