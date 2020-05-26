@@ -331,10 +331,9 @@ function pipjqui_register_themes(): void
         $src = PIPJQUI_PLUGIN_WEBPATH . 'themes/' . $stub . '/jquery-ui.min.css';
         // when serving locally include non-null version parameter
         //  when serving locally, we do not need base as fall-back dep
-        wp_register_style( $handle, $src, array(''), PIPJQUIV );
+        wp_register_style( $handle, $src, array(), PIPJQUIV );
     }
   }
-  // use base by default
   $active = pipjqui_get_default_theme_option();
   $handle = 'jquery-ui-' . pipjqui_theme_to_stub( $active );
   wp_register_style( 'jquery-ui-theme-active', false, array( $handle ), null );
