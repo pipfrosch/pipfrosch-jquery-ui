@@ -528,9 +528,9 @@ function pipjqui_update_wpcore_jqueryui()
     wp_deregister_script( $component );
   }
   if ( $srcuri->cdn ) {
-    wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core', 'jquery-ui-theme-active' ), null );
+    wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core' ), null );
   } else {
-    wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core', 'jquery-ui-theme-active' ), PIPJQUIV );
+    wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery-core' ), PIPJQUIV );
   }
   // set up the aliases
   wp_register_script( 'jquery-ui-core', false, array( 'pipfrosch-jquery-ui-core' ), null );
