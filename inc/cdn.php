@@ -114,9 +114,11 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
   } else {
     $cdnstring = '" crossorigin="anonymous"';
   }
-  $html  = '<script>' . PHP_EOL;
-  $html .= 'function jquicssfb(theme) {' . PHP_EOL;
-  $html .= '  document.write(\'<script src="/path/to/whatever/\' + theme + \'.min.css"><\/script>);' . PHP_EOL;
+  $src = PIPJQUI_PLUGIN_WEBPATH . 'themes/' . $themestub . '/jquery-ui.min.css' . '?ver=' . PIPJQUIV ;
+  $html  = '<!-- fallback for CDN CSS failure -->' . PHP_EOL;
+  $html .= '<script>' . PHP_EOL;
+  $html .= 'function jquicssfb() {' . PHP_EOL;
+  $html .= '  document.write(\'<link rel="stylesheet" href="' . $src . '" type="text/css" media="' . $media . '" />\');' . PHP_EOL;
   $html .= '}' . PHP_EOL . '</script>' . PHP_EOL;
   return $html . '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . $cdnstring . ' type="text/css" media="' . $media . '" onerror="window.alert(\'' . $themestub . '\');" />' . PHP_EOL;  
 }
