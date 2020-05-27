@@ -66,9 +66,9 @@ function pipjqui_sanitize_cdnhost( string $input ) {
     case 'microsoft cdn':
       return 'Microsoft CDN';
       break;
-//    case 'jsdelivr cdn':
-//      return 'jsDelivr CDN';
-//      break;
+    case 'jsdelivr cdn':
+      return 'jsDelivr CDN';
+      break;
     case 'cloudflare cdnjs':
       return 'CloudFlare CDNJS';
       break;
@@ -275,6 +275,12 @@ function pipjqui_register_themes(): void
         $src = $base . PIPJQUIV . $path;
         wp_register_style( $handle, $src, array(), null );
         break;
+      case 'jsDelivr CDN':
+        $base = 'https://cdn.jsdelivr.net/npm/jquery-ui-themes@';
+        $path = '/themes/' . $stub . 'jquery-ui.min.css';
+        $src = $base . PIPJQUIV . $path;
+        wp_register_style( $handle, $src, array(), null );
+        break;
       case 'Google CDN':
         $base = 'https://ajax.googleapis.com/ajax/libs/jqueryui/';
         $path = '/themes/' . $stub . '/jquery-ui.min.css';
@@ -319,6 +325,10 @@ function pipjqui_script_src( string $cdnhost="localhost" )
       break;
     case 'CloudFlare CDNJS':
       $rs->jqueryui = 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/' . PIPJQUIV . '/jquery-ui.min.js';
+      $rs->cdn = true;
+      break;
+    case 'jsDelivr CDN':
+      $rs->jqueryui = 'https://cdn.jsdelivr.net/npm/jquery-ui-dist@' . PIPJQUIV . '/jquery-ui.min.js';
       $rs->cdn = true;
       break;
     case 'Google CDN':
