@@ -215,52 +215,6 @@ function pipjqui_get_cdnhost(): string
 }
 
 /**
- * Outputs an array of default themes.
- *
- * @param bool $stub Whether or not to output as stubs
- *
- * @return array
- */
-function pipjqui_default_themes( bool $stub = false ): array
-{
-  $standard = array( 'Base',
-                     'Black Tie',
-                     'Blitzer',
-                     'Cupertino',
-                     'Dark Hive',
-                     'Dot-Luv',
-                     'Eggplant',
-                     'Excite-Bike',
-                     'Flick',
-                     'Hot-Sneaks',
-                     'Humanity',
-                     'Le-Frog',
-                     'Mint-Choc',
-                     'Overcast',
-                     'Pepper-Grinder',
-                     'Redmond',
-                     'Smoothness',
-                     'South-Street',
-                     'Start',
-                     'Sunny',
-                     'Swanky-Purse',
-                     'Trontastic',
-                     'UI-Darkness',
-                     'UI-Lightness',
-                     'Vader' );
-  if ( $stub ) {
-    $rs = array();
-    foreach ( $standard as $theme ) {
-      $stub = strtolower( sanitize_text_field( $theme ) );
-      $stub = preg_replace('/\s+/', '-', $stub);
-      $rs[] = $stub;
-    }
-    return $rs;
-  }
-  return $standard;
-}
-
-/**
  * Takes a theme (or stub) name and returns the corresponding stub.
  *
  * This function will return 'base' if the specified theme does
@@ -274,7 +228,7 @@ function pipjqui_theme_to_stub( string $theme ): string
 {
   $stub = strtolower( sanitize_text_field( $theme ) );
   $stub = preg_replace('/\s+/', '-', $stub);
-  $arr = pipjqui_default_themes( true );
+  $arr = pipjqui_themesri( 'stub' );
   if ( in_array( $stub, $arr ) ) {
     return $stub;
   }
@@ -299,7 +253,7 @@ function pipjqui_register_themes(): void
   // when serving locally include non-null version parameter
   //wp_register_style( 'jquery-ui-theme-base', $src, array(), PIPJQUIV );
   
-  $themes = pipjqui_default_themes( true );
+  $themes = pipjqui_themesri( 'stub' );
   foreach ( $themes as $stub ) {
     $handle = 'jquery-ui-theme-' . $stub;
     switch ( $cdnhost ) {
@@ -566,7 +520,7 @@ function pipjqui_resource_prefetch(): void
   } else {
     $source .= '?ver=' . PIPJQUIV;
   }
-  $html .= PHP_EOL . '<!-- Pipfrosch jQuery Preload -->' . PHP_EOL;
+  $html .= PHP_EOL . '<!-- Pipfrosch jQuery Prefetch -->' . PHP_EOL;
   $html .= '<link rel="prefetch" href="' . $source . '" ' . $crossorigin . '/>' . PHP_EOL;
   if ( defined( 'PIPJQ_PLUGIN_VERSION' ) && function_exists( 'pipjq_script_src' ) ) {
     $jqcobj = pipjq_script_src( $hostoption );
@@ -577,6 +531,7 @@ function pipjqui_resource_prefetch(): void
       $html .= '<link rel="prefetch" href="' . $jqcobj->migrate . '" ' . $crossorigin . '/>' . PHP_EOL;
     }
   }
+  $html .= '<!-- End Pipfrosch jQuery Prefetch -->' . PHP_EOL;
   echo $html;
 }
   
@@ -741,7 +696,7 @@ function pipjqui_cdnhost_select_tag(): void
 function pipjqui_uithemes_select_tag(): void
 {
   $themestub = pipjqui_get_default_theme_option();
-  $themes = pipjqui_default_themes();
+  $themes = pipjqui_themesri( 'human' );
   $html = '<select name="pipjqui_default_theme" id="pipjqui_default_theme">' . PHP_EOL;
   foreach ( $themes as $theme ) {
     $stub = pipjqui_theme_to_stub( $theme );
@@ -951,7 +906,7 @@ function pipjqui_load_alternate_theme( string $theme ): void
 {
   $stub = strtolower( sanitize_text_field( $theme ) );
   $stub = preg_replace('/\s+/', '-', $stub);
-  $valid = pipjqui_default_themes( true );
+  $valid = pipjqui_themesri( 'stub' );
   if ( in_array( $stub, $valid ) ) {
     $theme_handle = 'jquery-ui-theme-' . $stub;
     wp_deregister_style( 'jquery-ui-theme-active' );
@@ -994,7 +949,7 @@ function pipjqui_load_custom_theme( string $handle, string $src, string $depende
   } else {
     $stub = strtolower( sanitize_text_field( $dependency ) );
     $stub = preg_replace('/\s+/', '-', $stub);
-    $valid = pipjqui_default_themes( true );
+    $valid = pipjqui_themesri( 'stub' );
     if ( in_array( $stub, $valid ) ) {
       $stub = $default;
     }
