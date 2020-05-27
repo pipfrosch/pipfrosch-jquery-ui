@@ -1,0 +1,2 @@
+jquery-ui.min.css: sha256-kh9nfiRK1NVN8NYzEvAOHQcIrJtEv2bu4ir/SlzHKQs=
+jquery-ui.min.css: sha384-kwwEnSVabkrbFJ8cfdRFNXqAcZ4HwElXV0vqPSjdqFnUx2rfhOEcJsM613+q5rr/

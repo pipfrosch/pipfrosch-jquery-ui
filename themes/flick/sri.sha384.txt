@@ -1,2 +1,0 @@
-jquery-ui.css:     sha384-BT8EDr2dagza/7h3/8iR3EjuwxiG8DS6iA2eiB/4AD5xAlBEn9lYneStqKI8G/fK
-jquery-ui.min.css: sha384-y71hDw103tAslwz4j8oW7fM1K1+2zy32XLoBAUnNYNTHfRjhjpO/szAcdm5cEwax
