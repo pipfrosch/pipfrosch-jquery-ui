@@ -426,7 +426,7 @@ function pipjqui_fallback_for_cdn_failure(): string
  */
 function pipjqui_add_sri_attributes( string $tag, string $handle, string $source ): string
 {
-  if ( $handle === 'pipfrosch-jquery-ui-core' ) {
+  if ( $handle === 'pipfrosch-jquery-ui-full' ) {
     $html = pipjqui_fallback_for_cdn_failure();
     return '<script src="' . $source . '" integrity="' . PIPJQUIVSRI . '" crossorigin="anonymous"></script>' . PHP_EOL . $html;
   }
@@ -452,7 +452,7 @@ function pipjqui_add_sri_attributes( string $tag, string $handle, string $source
  */
 function pipjqui_add_crossorigin_attribute( string $tag, string $handle, string $source ): string
 {
-  if ( $handle === 'pipfrosch-jquery-ui-core' ) {
+  if ( $handle === 'pipfrosch-jquery-ui-full' ) {
     $html = pipjqui_fallback_for_cdn_failure();
     return '<script src="' . $source . '" crossorigin="anonymous"></script>' . PHP_EOL . $html;
   }
@@ -531,14 +531,15 @@ function pipjqui_update_wpcore_jqueryui()
   // update dependency from jquery to jquery-core when jQuery UI 1.13.x is packaged as it will
   //  take of the deprecation warnings when used with jQuery 3.5.x
   if ( $srcuri->cdn ) {
-    wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery' ), null );
+    wp_register_script( 'pipfrosch-jquery-ui-full', $srcuri->jqueryui, array( 'jquery' ), null );
   } else {
-    wp_register_script( 'pipfrosch-jquery-ui-core', $srcuri->jqueryui, array( 'jquery' ), PIPJQUIV );
+    wp_register_script( 'pipfrosch-jquery-ui-full', $srcuri->jqueryui, array( 'jquery' ), PIPJQUIV );
   }
   // set up the aliases
-  wp_register_script( 'jquery-ui-core', false, array( 'pipfrosch-jquery-ui-core' ), null );
+  wp_register_script( 'jquery-ui-core', false, array( 'pipfrosch-jquery-ui-full' ), null );
+  wp_register_script( 'jquery-ui-full', false, array( 'pipfrosch-jquery-ui-full' ), null );
   foreach( $alias_components as $component ) {
-    wp_register_script( $component, false, array( 'pipfrosch-jquery-ui-core' ), null );
+    wp_register_script( $component, false, array( 'pipfrosch-jquery-ui-full' ), null );
   }
   if ( $srcuri->cdn ) {
     if ( $sri ) {
@@ -588,7 +589,7 @@ function pipjqui_resource_prefetch(): void
  * Load default jQuery UI theme
  *
  * This callback needs to be called late in wp_enqueue_scripts action so that when
- *  jquery-ui-core gets loaded this callback is not called before jquery-ui-core gets loaded.
+ *  jquery-ui gets loaded this callback is not called before jquery-ui gets loaded.
  *
  * If it detects that jQuery UI is being used on the pages, it triggers the active theme to
  *  be enqueued.
@@ -597,7 +598,7 @@ function pipjqui_resource_prefetch(): void
  */
 function pipjqui_load_default_theme(): void
 {
-  if ( wp_script_is( 'pipfrosch-jquery-ui-core' ) ) {
+  if ( wp_script_is( 'pipfrosch-jquery-ui-full' ) ) {
     wp_enqueue_style( 'jquery-ui-theme-active' );
   } else {
     add_action('wp_head', 'pipjqui_resource_prefetch');

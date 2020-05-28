@@ -152,43 +152,75 @@ For the themes, within the `themes/` directory is a bash shell script called `mk
 These SRI hashes are in the file `versions.php`.
 
 
-== Plugin / Theme Developers ==
+== WordPress Theme Developers ==
 
-Stuff goes here
-
-
+At the bottom of the `inc/functions.php` file are two functions you can use to override the default jQuery UI theme if your WordPress theme either prefers a specific jQuery UI theme or if your WordPress theme has a custom jQuery UI theme included.
 
 
 == Update Policy ==
 
-Stuff goes here
+I will try to update this plugin when new versions of jQuery UI are released but it may not be as fast as some may like. You can bug me by leaving sending an e-mail to pipfroshpress[AT]gmail[DOT]com.
+
+Please note updates to this plugin with new versions of jQuery UI will not be pushed until that majority of the supported CDNs have the file.
+
+Based upon recent activity on the jQuery UI github, I suspect that jQuery UI 1.13.x will be released within the next few months, it appears from the pull requests that the primary goal is to deal with deprecation warnings when used in conjunction with jQuery 3.5.x but it looks like there are some other fixes in it as well.
+
+Development takes place on github at https://github.com/pipfrosch/pipfrosch-jquery-ui
+
+The `master` branch will usually be exactly the same as what is distributed through WordPress except it will have a small `README.md` file. The branch `pipjqui` is where I develop and may not always be stable. When a new release ready *and tested* from the `pipjqui` branch, it will be merged with `master` and then repacked for distribution through WordPress.
+
+Please use the distribution from WordPress rather than from github. The version from WordPress is audited by more eyes than my github.
+
 
 == Versioning Scheme ==
 
-Stuff goes here.
+Versions use an `Major.Minor.Tweak` scheme` using integers for each. Code in github may have a `pre` appended at the end to indicate is not a released version and should not be used on production systems.
+
+= Tweak bump =
+
+The __Tweak__ is incremented by one when a minor change is made, such as adding a new language to the translation support. Generally you can ignore upgrading this plugin when there is just a *Tweak* bump.
+
+= Minor bump =
+
+The __Minor__ is incremented by one when a functional bug is fixed or when an update to jQuery or the jQuery Migrate plugin is made that is not a substantial jQuery change. When *Minor* is bumped, *Tweak* will reset to `0`. Generally you should upgrade when *Minor* is bumped.
+
+= Major bump =
+
+The __Major__ will be incremented when there is an upgrade to jQuery that is significant in nature. Both *Minor* and *Tweak* are reset to `0` when *Major*
+is bumped.
+
+Generally you should test an update to *Major* before updating on a production system just in case some of your jQuery code needs tweaks before deployment.
+
 
 == Translations ==
 
-Stuff goes here
+This plugin is ready for translations but so far does not actually have any. Note that the only strings where translations are beneficial require administrative privileges to see (the Settings). Hopefully translations will soon be made for the benefit of WordPress administrators who have a preferred written language other than English.
+
 
 == Frequently Asked Questions ==
 
-= Question =
+= Does this plugin require your Pipfrosch jQuery plugin? =
 
-Answer
+No. It will work using the version of jQuery that ships as part of WordPress.
+
+= I wrote a custom jQuery UI theme, can I get it included in this plugin? =
+
+If you submit it to jQuery UI for inclusion with their standard themes, then it will be available in a future release of this package.
+
+= The complete jQuery UI library as a single file is large. Can you make a version with individual libraries for individual feature? =
+
+If you use a Public CDN then with many visitors to your site, they will already have it cached making the file size irrelevant. Furthermore, a prefetch link is automatically created for pages on a WordPress site that do not use jQuery UI, increasing the odds that users who do not already have it cached will have it cached when visiting a page on your site that needs it. Most of the Public CDNs do not serve the individual components, I only found one that does. Single file is better for Public CDN use and Public CDN use is faster for your users even though the file is bigger and contains features you might not be using.
 
 == Screenshots ==
 
 Stuff goes here
 
-== Developers ==
-
-Stuff goes here
 
 == Changelog ==
 
-Stuff goes here
+= 1.0.0 ( ???? ) =
+* Initial Release
 
 == Upgrade Notice ==
 
-Stuff goes here
+Initial release of this WordPress plugin
