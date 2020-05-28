@@ -30,7 +30,6 @@ define( "PIPJQUI_SETTINGS_PAGE_SLUG_NAME", 'pipjqui_options');
 
 require_once( PIPJQUI_PLUGIN_DIR . 'versions.php' );
 require_once( PIPJQUI_PLUGIN_DIR . 'inc/functions.php' );
-require_once( PIPJQUI_PLUGIN_DIR . 'inc/cdn.php' );
 require_once( PIPJQUI_PLUGIN_DIR . 'demo/demo.php' );
 
 pipjqui_upgrade_check();

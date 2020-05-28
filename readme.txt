@@ -152,7 +152,7 @@ For the themes, within the `themes/` directory is a bash shell script called `mk
 These SRI hashes are in the file `versions.php`.
 
 
-== Plugin / Theme Compatibility ==
+== Plugin / Theme Developers ==
 
 Stuff goes here
 
