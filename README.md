@@ -1,13 +1,7 @@
 Pipfrosch jQuery UI
 ===================
 
-None of the code here has been tested. As in none. Will be some time before
-it is.
-
-This will not be seriously worked on much until I need it. And I may not.
-
-If I end up using jQuery UI within piptheme then I will need this, so I am
-slowly coding it so that if I do need it, it is further along.
+Currently testing in preparation for submission.
 
 Nutshell is it will bring an updated CDN compatible jQueryUI to WordPress.
 

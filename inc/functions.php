@@ -12,7 +12,8 @@ if ( ! defined( 'PIPJQUI_PLUGIN_WEBPATH' ) ) { exit; }
  *  not set.
  *
  * @param string The name of the option to query.
- * @param bool   The default value to return and set if the option is not set.
+ * @param bool   Optional. Defaults to true. The default value to return and set
+ *               if the option is not set.
  *
  * @return bool
  */
@@ -241,7 +242,7 @@ function pipjqui_theme_to_stub( string $theme ): string
  * @param string $html   The link node being run through the filter.
  * @param string $handle The WP registered handle for the CSS file.
  * @param string $href   The href attribute of the link
- * @param string $media  The media attribute. Defaults to all.
+ * @param string $media  Optional. Defaults to 'all'. The media attribute.
  */
 function pipjqui_theme_cdn_attributes( string $html, string $handle, string $href, string $media = 'all' ) {
   // array of handles this callback is used with
@@ -277,8 +278,6 @@ function pipjqui_theme_cdn_attributes( string $html, string $handle, string $hre
  *
  * Always loads the base theme locally so there is something in case
  *  of a CDN failure
- *
- * TODO - SRI and anonymous filters
  *
  * @return void
  */
@@ -344,11 +343,11 @@ function pipjqui_register_themes(): void
  *  strings as a property, and also a boolean property that specifies whether or
  *  not the `src` property is for a CDN.
  *
- * @param string The name of the CDN host.
+ * @param string Optional. Defaults to 'localhost'. The name of the CDN host.
  *
  * @return stdClass
  */
-function pipjqui_script_src( string $cdnhost="localhost" )
+function pipjqui_script_src( string $cdnhost='localhost' )
 {
   $rs = new stdClass();
   switch ( $cdnhost ) {
@@ -914,6 +913,8 @@ function pipjqui_register_options_page(): void
  *
  * Returns string if successful, false otherwise which when used
  *  in wp_register_style will result in WP version being used.
+ *
+ * @return string|false
  */
 function pipjqui_get_active_theme_version()
 {
@@ -981,10 +982,11 @@ function pipjqui_load_alternate_theme( string $theme ): void
  *
  * @param string $handle     The handle to use for your custom jQuery UI Theme
  * @param string $src        The URI path to the CSS for your custom jQuery UI Them
- * @param string $dependency The existing jQuery UI Theme your custom theme depends on.
- *                           By default, it depends upon the base theme. If your custom
- *                           theme really defines all the CSS that jQuery UI needs you
- *                           can use an empty string to indicate no dependencies. 
+ * @param string $dependency Optional. Defaults to 'default'. The existing jQuery UI Theme your custom
+ *                           theme depends on. By default, it depends upon the jQuery UI theme that has
+ *                           been selected in the plugin preferences. If your custom theme really defines
+ *                           all the CSS that jQuery UI needs you can use an empty string to indicate no
+ *                           dependencies. 
  *
  * @return void
  */

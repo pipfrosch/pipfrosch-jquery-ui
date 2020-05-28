@@ -4,7 +4,7 @@
  * Plugin URI:        https://pipfrosch.com/floss/pipfrosch-jquery-ui/
  * Description:       Provides a modern jQuery UI library for WordPress frontend
  * Tags:              jQuery,jQuery UI,jQuery-UI
- * Version:           0.0.3pre
+ * Version:           0.0.4pre
  * Requires at least: 4.1.0
  * Tested up to:      5.4.1
  * Author:            Pipfrosch Press
